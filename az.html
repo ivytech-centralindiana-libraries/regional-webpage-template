@@ -1,20 +1,41 @@
-
 <!--
-  A-Z list with alpha jumps version 1
-  2/20/17
+  A-Z list, alpha filter
+  2/22
   ====================================
-    - Going to try a version of the A-Z alpha filter using HTML/empty divs instead of jquery
-    - Right now, this doesn't work, but there is a working older version on the live site
+    HTML #ID jump instead of jquery
+    
+    Next items on to-do list:
+    - add "all types"/"all subjects" to dropdowns (bascially "reset")
+    - display filter type at top of list as title
+      - i.e. when technology is selected, you see "Technology Databases"
+    - style alphabet links
+      - maybe with flexbox??
+    - contemplate making that alpha function into a variable
 -->
 
-<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script><!-- load lodash for filtering API list -->
+<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script><!-- load lodash -->
 <style type="text/css">
 select {
    height:100%;
 }
+.alpha_group {
+    font-size: 1.2em;
+    margin-top: 1em;
+    margin-bottom: .5em;
+    border-bottom: 1px solid;
+    text-transform: uppercase;
+    color: #086c54;
+    font-weight: 700;
+    letter-spacing: .05em;
+    margin-left: -30px;
+    padding-left: 10px;
+}
+
 </style>
 
-<div class="dropdown"> <!-- Database by Type filter dropdown -->
+<div class="dropdown-az-filter">
+  
+  <!-- Database by Type filter dropdown -->
  <select class="az-type">
    
     <option>Database by Type</option>
@@ -25,9 +46,9 @@ select {
     
   </select>
 
-</div>
 
-<div class="dropdown"> <!-- Database by Subject filter dropdown -->
+
+ <!-- Database by Subject filter dropdown -->
   <select class="az-subject">
     <option>Database by Subject</option>
     <option class="subject" value="Business">Business</option>
@@ -35,7 +56,7 @@ select {
     <option class="subject" value="Technology">Technology</option>
     <option class="subject" value="Fine Arts & Design">Fine Arts & Design</option>
     <option class="subject" value="Health Sciences & Nursing">Health Sciences & Nursing</option>
-    <option class="subject" value="Public & Social Science">Public & Social Science</option>
+    <option class="subject" value="Public & Social Services">Public & Social Services</option>
     <option class="subject" value="Liberal Arts & Sciences">Liberal Arts & Sciences</option>
     <option class="subject" value="Education">Education</option>
     
@@ -52,10 +73,6 @@ select {
 
 <script>
  
- 
- /*
- Unedited from a-z_v3-type-subject.html as of 2/20/17
- */
  
  $(document).ready(function (){
    
@@ -91,6 +108,37 @@ listHTML += '</ul>';
 
 //then appends list to #AZ-list div
 $('#AZ-list').append(listHTML);
+
+
+    //this function (which needs a name) took forever to figure out:
+    $( "#AZ-list li" ).each(function( index ) {
+      
+      //variable holds the first character of whatever string we're looking at; in this case, the title of the database in the A-Z list
+      var firstChar = ( $( this ).text().trim()[0] );
+      
+      //empty variable to use during for loop below
+      //will hold the number of the character code that corresponds to each letter of the alphabet
+      var charCode;
+     
+      //variable that changes the ID of the div that holds the a-z list items
+      var groupName = "letter_" + firstChar;
+      
+      //variable that holds the boolean value of whether or not a div with a specific/unique groupName ID already exists
+      var groupExists = document.getElementById(groupName);
+       
+        //this loop takes the character code of each letter of the alphabet (happens to start with 65 = A)
+          //and looks at the string (name of the database in A-Z list) to see if the first character of that string matches the the character code
+          //if so, it adds a div with an id of the letter before the list item
+          //then moves on to the next database name
+          //if the div with the ID groupName already exists (&& !groupExists) it doesn't add the div
+        for (charCode=65; charCode < 91; charCode++) {
+            if ((String.fromCharCode(charCode) == firstChar) && !groupExists) {
+              $(this).before('<div class="alpha_group" id="' + groupName + '">' + firstChar + '</div>');
+            }
+        }
+         
+    });
+    
 
   }
   
@@ -156,11 +204,31 @@ var CIdatabases;
         $('#AZ-list').empty();
         $('#AZ-list').append(listHTML);
         
+        //same as function above, it needs a name so i can call it instead of writing it twice
+        $( "#AZ-list li" ).each(function( index ) {
+  
+                var firstChar = ( $( this ).text().trim()[0] );
+                var charCode;
+                var groupName = "letter_" + firstChar;
+                var groupExists = document.getElementById(groupName);
+                 
+                  for (charCode=65; charCode < 91; charCode++) {
+                      if ((String.fromCharCode(charCode) == firstChar) && !groupExists) {
+                        $(this).before('<div class="alpha_group" id="' + groupName + '">' + firstChar + '</div>');
+                      }
+                  }
+               
+          });
+        
           }
           
         var response = $.getJSON(azAPI, displayAZlist);
+        
      
   });
-   
- });
+  
+
+});
+
+
 </script>
