@@ -8,8 +8,7 @@
     - add "all types"/"all subjects" to dropdowns (bascially "reset")
     - display filter type at top of list as title
       - i.e. when technology is selected, you see "Technology Databases"
-    - style alphabet links
-      - maybe with flexbox??
+    - add back in toLowerCase so the alphabetical order is correct
     - contemplate making that alpha function into a variable
 -->
 
@@ -18,17 +17,23 @@
 select {
    height:100%;
 }
+#first-letters {
+    display: flex;
+    justify-content: space-between;
+    margin: .5em 0;
+    font-size: 1.2em;
+}
 .alpha_group {
     font-size: 1.2em;
     margin-top: 1em;
     margin-bottom: .5em;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid gainsboro;
     text-transform: uppercase;
     color: #086c54;
     font-weight: 700;
     letter-spacing: .05em;
-    margin-left: -30px;
-    padding-left: 10px;
+    margin-left: -40px;
+    padding-left: 15px;
 }
 
 </style>
