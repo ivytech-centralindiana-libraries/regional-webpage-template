@@ -1,177 +1,125 @@
-<!-- last saved 01.25.16 -->
+<!-- last saved 03.01.17 -->
 <!--
 ******************************************************************************************************************************
-Website Style 1.1
+Website Style 2.0 MOBILE FIRST
 Platform brought you by Springshare and LibGuides CMS
 Template created by Caryl Wyatt, Ivy Tech Community College, Lawrence Library, Indianapolis
 cwyatt20@ivytech.edu | caryl.e.wyatt@gmail.com
 ******************************************************************************************************************************
 -->
 <body class="s-lg-guide-body">
-        {{ADMIN_CMD_BAR}}
-        <!-- BEGIN: Page Header -->
-        {{public_header}}
-        <!-- END: Page Header -->
+    {{ADMIN_CMD_BAR}}
+    <!-- BEGIN: Page Header -->
+    {{public_header}}
+    <!-- END: Page Header -->
+    
+    <div id="s-lg-guide-header-info">
+            <h1 id="s-lg-guide-name">{{guide_title}}</h1>
+            <div id="s-lg-guide-desc-container">
+                <span id="s-lg-guide-description">{{guide_description}}</span>
+            </div>
+    </div>
+
+    <div id="s-lg-guide-tabs-title-bar" class="container s-lib-side-borders"></div>
        
-       <div id="s-lg-guide-header-info">
-                <h1 id="s-lg-guide-name">{{guide_title}}</h1>
-                <div id="s-lg-guide-desc-container">
-                    <span id="s-lg-guide-description">{{guide_description}}</span>
-                </div>
-        </div>
-        
-       <div id="s-lg-guide-tabs-title-bar" class="container s-lib-side-borders"></div>
-       
-        <!-- BEGIN: Guide Content -->
-        <div id="s-lg-guide-main" class="container s-lib-main s-lib-side-borders">
+    <!-- BEGIN: Guide Content -->
+    <div id="s-lg-guide-main" class="container s-lib-main s-lib-side-borders">
+          
  <!-- BEGIN: content -->
-             <!-- Main Content -->
-<div class="main-container">
-<!-- MAIN PAGE ROW -->
-      <div id="s-lg-row-1" class="row s-lg-row main-content">
-<!-- LEFT SIDE NAV COLUMN -->
-
-       <div class="col-md-3 s-lg-tabs-side pad-bottom-med" id="left-column">
-            <div class="news-wrapper">
-             
-                  <nav class="collapse navbar-collapse navbar-menubuilder" role="navigation">
-                        <ul class="nav nav-pills nav-stacked">
-                               {{guide_nav}}
-                         </ul>
-                     
-                </nav>
-                {{side_nav_boxes}}
-              </div>
-          </div>
-
-<!-- END SIDE NAV COLUMN -->
-
-<!-- ==================== HOMEPAGE LAYOUT CONTENT ====================== -->
-      <div id="homepage-layout">
-        <div class="events col-md-6">
-            <div class="center-wrapper">
-              <!-- pre-box row for region's site names -->
-              <div class="row pre-box-row">
-                <div id="s-lg-col-7" class="col-md-12">
-                  <div class="s-lg-col-boxes">
-                       {{content_col_7}}
-                  </div>
-                </div>
-              </div>
-              
-              <!---first row of boxes -->
-              <div class="row first-row">
-                <div class="col-xs-12 col-md-6">
-                  <h3 class="box-title btn btn-lg btn-boxes"><a id="search-find-link" href="">
-                    Search &amp; Find</a>
-                  </h3>
-                  <div>
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <ul class="box-list">
-                      <li>Articles</li>
-                      <li>Books</li>
-                      <li>Images</li>
-                      <li>More...</li>
-                    </ul>
-                  </div>
-                 </div>
-                <div class="col-xs-12 col-md-6">
-                  <h3 class="box-title btn btn-lg btn-boxes"><a id="help-link" href="">Help</a></h3>
-                  <div>
-                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                    <ul class="box-list">
-                      <li>Guides</li>
-                      <li>Tutorials</li>
-                      <li>Citing Sources</li>
-                    </ul>
-                  </div>
-                 </div>
-              </div>
-              <!---second row of boxes -->
-              <div class="row second-row">
-                <div class="col-xs-12 col-md-6">
-                  <h3 class="box-title btn btn-lg btn-boxes"><a id="ask-link" href="">Ask a Librarian</a></h3>
-                  <div>
-                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-                    <span class="ask-text"><p>Ask library staff a research-related question</p></span>
-                  </div>
-                 </div>
-                <div class="col-xs-12 col-md-6">
-                 <h3 class="box-title btn btn-lg btn-boxes"><a id="about-link" href="">About My Library</a></h3>
-                  <div>
-                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                    <ul class="box-list">
-                      <li>Hours &amp; Staff</li>
-                      <li>News</li>
-                      <li>Library Services</li>
-                    </ul>
-                  </div>
-                 </div>
-              </div>
-        <!---third row for content -->
-              <div class="row third-row">
-                <div id="s-lg-col-1" class="col-md-12">
-                  <div class="s-lg-col-boxes">
-                       {{content_col_1}}
-                  </div>
-                </div>
-              </div>
       
-
+      <!-- Main Content -->
+      <div class="main-container container">
+   <!-- MAIN PAGE ROW -->
+        <div id="s-lg-row-1" class="row s-lg-row main-content row-offcanvas row-offcanvas-left">
+    <!-- LEFT SIDE NAV COLUMN -->
+    
+           <div class="col-md-3 s-lg-tabs-side pad-bottom-med sidebar-offcanvas" id="left-column sidebar">
+              <nav class="navbar-menubuilder" role="navigation">
+                <ul class="nav nav-pills nav-stacked">
+                       {{guide_nav}}
+                </ul>
+              </nav>
+            
             </div>
-        </div>
-        
-    <!-- RIGHT COLUMN -->
 
-        <div id="s-lg-col-2" class="news col-md-3">
-            <div class="news-wrapper">
-             <div class="s-lg-col-boxes">
-                       {{content_col_2}}
+    <!-- END SIDE NAV COLUMN -->
+
+<!-- ==================== MAIN CONTENT ====================== -->
+
+       
+        <div class="page-wrapper">
+          <div class="col-md-9">
+              <div class="center-wrapper">
+                <div class="row pages-content">
+                  
+                 
+                  <div id="s-lg-col-1" class="col-xs-12 col-sm-12 col-md-12">
+                      <div class="s-lg-col-boxes">
+                           {{content_col_1}}
+                      </div>
+                      
+                    </div>
+                  
+                </div>
+                <div class="row pages-content">
+                  
+                 
+                  <div id="s-lg-col-2" class="col-md-6 col-sm-6">
+                      <div class="s-lg-col-boxes">
+                           {{content_col_2}}
+                      </div>
                   </div>
-            </div>
-        </div>
-    </div>
-<!-- ==================== END HOMEPAGE LAYOUT CONTENT ====================== -->
-
-<!-- ==================== PAGES LAYOUT CONTENT ====================== -->
-
-      <div id="pages-layout">
-        <div  class="events col-md-9">
-            <div class="center-wrapper">
-              <div class="row pages-content">
-                
-                <div id="s-lg-col-3" class="hidden-xs hidden-sm col-md-4">
-                    <div class="s-lg-col-boxes">
-                         {{content_col_3}}
-                    </div>
+                  <div id="s-lg-col-3" class="col-md-6 col-sm-6">
+                      <div class="s-lg-col-boxes">
+                           {{content_col_3}}
+                      </div>
+                  </div>
+                  
                 </div>
-                <div id="s-lg-col-4" class="col-xs-12 col-sm-12 col-md-8">
-                    <div class="s-lg-col-boxes">
-                         {{content_col_4}}
-                    </div>
+                <div id="s-lg-col-4" class="col-xs-12 col-sm-12 col-md-12">
+                      <div class="s-lg-col-boxes">
+                           {{content_col_4}}
+                      </div>
+                  </div>
+                  
+               
+                <div class="row pages-content">
+                  
+                 
+                  <div id="s-lg-col-5" class="col-xs-6 col-sm-6 col-md-6">
+                      <div class="s-lg-col-boxes">
+                           {{content_col_5}}
+                      </div>
+                  </div>
+                  <div id="s-lg-col-6" class="col-xs-6 col-sm-6 col-md-6">
+                      <div class="s-lg-col-boxes">
+                           {{content_col_6}}
+                      </div>
+                  </div>
+                  
+                  </div>
                 </div>
-                
               </div>
             </div>
-        </div>
-        
-        
-        
-    </div>
-
-<!-- ==================== END PAGES LAYOUT CONTENT ====================== -->
+          
+          
+<!-- ==================== END MAIN CONTENT ====================== -->
         </div> <!-- //close main row -->
       </div>    <!-- //close "container" -->
             
-        </div>
+  </div>
         <!-- END: Guide Content -->
+        
+        
+        
+        
         <!-- BEGIN: Page Footer -->
         <div id="s-lib-footer-public" class="s-lib-footer footer container  s-lib-side-borders">
            
            <div class="row footer-row">
-             <div id="s-lg-col-6" class="col-md-12">
+             <div id="s-lg-col-7" class="col-md-12">
                <div class="s-lg-col-boxes">
-                     {{content_col_6}}
+                     {{content_col_7}}
                 </div>
              </div>
            
@@ -180,6 +128,8 @@ cwyatt20@ivytech.edu | caryl.e.wyatt@gmail.com
            
            
         </div>
+        
+</div> <!-- closing div for #page-container from header -->
         <!-- END: Page Footer -->
         
 			<div id="s-lib-scroll-top" title="Back to Top">
@@ -194,58 +144,18 @@ cwyatt20@ivytech.edu | caryl.e.wyatt@gmail.com
               <div class="container">  {{public_footer}} </div>
 		<!-- END: Custom Footer -->
 <!-- JAVASCRIPTS ======================================================================================= -->
-
 <script>
 
+ $(document).ready(function() {
+        $('[data-toggle=offcanvas]').click(function() {
+          $('.row-offcanvas').toggleClass('active');
+        });
+     
 
-//create selector variable
-var activeClass = $('ul.nav.nav-pills.nav-stacked>li.active');
-
-//select active class with text of home
-//if text is 'home' show homepage layout
-if (activeClass.text().toLowerCase().trim() === 'home') {
-  $('#pages-layout').hide();
+  $('.nav-pills>li').first().hide();
   
- 
-     var containerHeight = $('.main-container').height() + 12;
-      
-   //  $('#left-column').height(containerHeight);
-   $('.center-wrapper').height(containerHeight);
-   // $('.news-wrapper').height(containerHeight);
- 
+ });
+
   
-  //ELSE show pages layout
-  
-    } else {
-    $('#homepage-layout').hide();
-       
-   
-        
-            var height1 = $('#s-lg-col-4').height();
-            var height2= $('ul.nav.nav-pills.nav-stacked').height();
-            var height2B = height2 + 70;    //40 was not cutting it, yo.
-      
-            if (height1 > height2B) { $('#left-column').height(height1);
-                                   $('.center-wrapper').css('height', '100%');
-                  } else {
-                    $('.center-wrapper').height(height2B);
-                    $('#left-column').height(height2B);
-                  }
-      
-}
-
-$('.nav-pills>li').first().addClass('top-home-box').removeClass('active');
-$('.nav-pills>li>a').first().html('<h3 id="home-button">{{guide_title}} Library</h3>');
-
-//nav boxes buttons select the href attribute from the left guide nav and insert into button href
-$('#search-find-link').attr('href', $('ul.nav.nav-pills.nav-stacked>li:nth-child(2)>a').attr('href'));
-$('#help-link').attr('href', $('ul.nav.nav-pills.nav-stacked>li:nth-child(3)>a').attr('href'));
-$('#ask-link').attr('href', $('ul.nav.nav-pills.nav-stacked>li:nth-child(4)>a').attr('href'));
-$('#about-link').attr('href', $('ul.nav.nav-pills.nav-stacked>li:nth-child(5)>a').attr('href'));
-
-
 </script>
-
-
-
 	</body>
