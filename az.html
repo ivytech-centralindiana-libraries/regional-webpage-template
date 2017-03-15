@@ -1,0 +1,241 @@
+<!--
+  A-Z list, alpha filter
+  2/22
+  ====================================
+    HTML #ID jump instead of jquery
+    
+    Next items on to-do list:
+    - add "all types"/"all subjects" to dropdowns (bascially "reset")
+    - display filter type at top of list as title
+      - i.e. when technology is selected, you see "Technology Databases"
+    - add back in toLowerCase so the alphabetical order is correct
+    - contemplate making that alpha function into a variable
+-->
+
+<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script><!-- load lodash -->
+<style type="text/css">
+select {
+   height:100%;
+}
+#first-letters {
+    display: flex;
+    justify-content: space-between;
+    margin: .5em 0;
+    font-size: 1.2em;
+}
+.alpha_group {
+    font-size: 1.2em;
+    margin-top: 1em;
+    margin-bottom: .5em;
+    border-bottom: 1px solid gainsboro;
+    text-transform: uppercase;
+    color: #086c54;
+    font-weight: 700;
+    letter-spacing: .05em;
+    margin-left: -40px;
+    padding-left: 15px;
+}
+
+</style>
+
+<h3>A-Z List of Databases</h3>
+
+<div class="dropdown-az-filter">
+  
+  <!-- Database by Type filter dropdown -->
+ <select class="az-type">
+   
+    <option>Database by Type</option>
+    <option class="type" value="eBook Collections">eBook Collections</option>
+    <option class="type" value="Reference Sources">Reference Sources</option>
+    <option class="type" value="News Sources">News Sources</option>
+    <option class="type" value="Streaming Video Collections">Streaming Video Collections</option>
+    
+  </select>
+
+
+
+ <!-- Database by Subject filter dropdown -->
+  <select class="az-subject">
+    <option>Database by Subject</option>
+    <option class="subject" value="Business">Business</option>
+    <option class="subject" value="Applied Sciences & Engineering">Applied Sciences & Engineering</option>
+    <option class="subject" value="Technology">Technology</option>
+    <option class="subject" value="Fine Arts & Design">Fine Arts & Design</option>
+    <option class="subject" value="Health Sciences & Nursing">Health Sciences & Nursing</option>
+    <option class="subject" value="Public & Social Services">Public & Social Services</option>
+    <option class="subject" value="Liberal Arts & Sciences">Liberal Arts & Sciences</option>
+    <option class="subject" value="Education">Education</option>
+    
+  </select>
+</div>
+
+<div id="first-letters"> <!-- alphabet filter links -->
+  <a href="#letter_A" id="first-letter-A">A</a> <a href="#letter_B" id="first-letter-B">B</a> <a href="#letter_C" id="first-letter-C">C</a> <a href="#letter_D" id="first-letter-D">D</a> <a href="#letter_E" id="first-letter-E">E</a> <a href="#letter_F" id="first-letter-F">F</a> <a href="#letter_G" id="first-letter-G">G</a> <a href="#letter_H" id="first-letter-H">H</a> <a href="#letter_I" id="first-letter-I">I</a> <a href="#letter_J" id="first-letter-J">J</a> <a href="#letter_L" id="first-letter-L">L</a> <a href="#letter_M" id="first-letter-M">M</a> <a href="#letter_N" id="first-letter-N">N</a> <a href="#letter_O" id="first-letter-O">O</a> <a href="#letter_P" id="first-letter-P">P</a> <a href="#letter_R" id="first-letter-R">R</a> <a href="#letter_S" id="first-letter-S">S</a> <a href="#letter_T" id="first-letter-T">T</a> <a href="#letter_U" id="first-letter-U">U</a> <a href="#letter_V" id="first-letter-V">V</a> <a href="#letter_W" id="first-letter-W">W</a>
+</div>
+
+<div id="AZ-list"></div> <!-- div where the A-Z list ends up -->
+
+
+
+<script>
+ 
+ 
+ $(document).ready(function (){
+   
+   //all central indiana region databases
+   
+     var azAPI = "https://lgapi-us.libapps.com/1.1/assets?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527&asset_types=10&expand=az_types,subjects";
+
+  function displayAZlist(data) {
+ 
+ //returns an array that holds all databases listed as Central Indiana as objects
+ var CIdatabases = _.filter(response.responseJSON, (['az_types[0].name', 'Central Indiana Region']));
+	
+	//sorts alphabetically
+var sorted = _.sortBy(CIdatabases, 'name');
+ 
+ //and places each database in list
+ var listHTML = '<ul>';
+ 
+     
+   _.forEach(sorted, function(database) {
+     
+            listHTML += '<li>';
+            listHTML += '<a href="' + database.url + '" target="_blank">';
+            listHTML += database.name;
+            listHTML += '</a><br/>';
+            listHTML += '<div class="az-description"><p>'
+            listHTML += database.description;
+            listHTML += '</p></div>'
+            listHTML += '</li>'
+  });
+
+listHTML += '</ul>';
+
+//then appends list to #AZ-list div
+$('#AZ-list').append(listHTML);
+
+
+    //this function (which needs a name) took forever to figure out:
+    $( "#AZ-list li" ).each(function( index ) {
+      
+      //variable holds the first character of whatever string we're looking at; in this case, the title of the database in the A-Z list
+      var firstChar = ( $( this ).text().trim()[0] );
+      
+      //empty variable to use during for loop below
+      //will hold the number of the character code that corresponds to each letter of the alphabet
+      var charCode;
+     
+      //variable that changes the ID of the div that holds the a-z list items
+      var groupName = "letter_" + firstChar;
+      
+      //variable that holds the boolean value of whether or not a div with a specific/unique groupName ID already exists
+      var groupExists = document.getElementById(groupName);
+       
+        //this loop takes the character code of each letter of the alphabet (happens to start with 65 = A)
+          //and looks at the string (name of the database in A-Z list) to see if the first character of that string matches the the character code
+          //if so, it adds a div with an id of the letter before the list item
+          //then moves on to the next database name
+          //if the div with the ID groupName already exists (&& !groupExists) it doesn't add the div
+        for (charCode=65; charCode < 91; charCode++) {
+            if ((String.fromCharCode(charCode) == firstChar) && !groupExists) {
+              $(this).before('<div class="alpha_group" id="' + groupName + '">' + firstChar + '</div>');
+            }
+        }
+         
+    });
+    
+
+  }
+  
+var response = $.getJSON(azAPI, displayAZlist);
+   
+//========== filtering by type/subject stuff ==========================================================
+
+var CIdatabases;
+
+   //on click
+   $('select').change(function(){
+     //remove 'selected' class
+    $('select option:selected').removeClass('selected');
+    //add selected class to actually clicked button
+    $('select option:selected').addClass('selected');
+    
+    
+     
+    
+     //grab text from button
+   var buttonText = $('option:selected',this).attr('value');
+   //trim it down so it's a nice and neat variable
+	  buttonText = $.trim(buttonText);
+	  //set buttonClass='type' to true
+	  var buttonClass = $('option:selected',this).hasClass('type');
+
+      var azAPI = "https://lgapi-us.libapps.com/1.1/assets?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527&asset_types=10&expand=az_types,subjects";
+   
+
+  function displayAZlist(data) {
+ 
+        //if buttonClass === true (i.e. class is type)
+  
+        if ( buttonClass ) {
+        //returns an array that holds all databases listed as Central Indiana as objects that are also that type of database clicked
+        var CIdatabases = _.filter(response.responseJSON, {az_types: [{name: 'Central Indiana Region'}] && [{name: buttonText}] });
+        } else {
+          //returns an array that holds all databases listed as Central Indiana as objects that are also that type of database clicked
+        var CIdatabases = _.filter(response.responseJSON, {az_types: [{name: 'Central Indiana Region'}] } && {subjects: [{name: buttonText}] });
+        }
+        	//sorted alphabetically
+        var sorted = _.sortBy(CIdatabases, 'name');
+         //and placed in a list
+        var listHTML = '<ul>';
+         
+             
+          _.forEach(sorted, function(database) {
+             
+              listHTML += '<li>';
+              listHTML += '<a href="' + database.url + '" target="_blank">';
+              listHTML += database.name;
+              listHTML += '</a><br/>';
+              listHTML += '<div class="az-description"><p>'
+              listHTML += database.description;
+              listHTML += '</p></div>'
+              listHTML += '</li>'
+              
+          });
+        
+        listHTML += '</ul>';
+        
+        //empty old AZ list and replace with new list
+        $('#AZ-list').empty();
+        $('#AZ-list').append(listHTML);
+        
+        //same as function above, it needs a name so i can call it instead of writing it twice
+        $( "#AZ-list li" ).each(function( index ) {
+  
+                var firstChar = ( $( this ).text().trim()[0] );
+                var charCode;
+                var groupName = "letter_" + firstChar;
+                var groupExists = document.getElementById(groupName);
+                 
+                  for (charCode=65; charCode < 91; charCode++) {
+                      if ((String.fromCharCode(charCode) == firstChar) && !groupExists) {
+                        $(this).before('<div class="alpha_group" id="' + groupName + '">' + firstChar + '</div>');
+                      }
+                  }
+               
+          });
+        
+          }
+          
+        var response = $.getJSON(azAPI, displayAZlist);
+        
+     
+  });
+  
+
+});
+
+
+</script>
