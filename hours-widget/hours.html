@@ -5,10 +5,8 @@
 
 /*
 
-//============= calendar address ==============
+//============= calendar address and API key ==============
 obtained from google calendar settings page: 6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com
-
-//================ key ===================
 obtained from google developers console: AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4
 
 //==== google calendar api list events docs ======
@@ -50,9 +48,12 @@ $('#todays-date').append(today);
 //create variable to hold utc-style of today's date (moments.js)
 const utc = date.format("YYYY-MM-DD");
 
+//create variables for calendar address and api key
+const calAddress = "6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com";
+const keyAPI = "AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4";
 //inject today's date in YYYY-MM-DD format to the API URL
 //this url returns only the events scheduled for today
-const googleCal = `https://www.googleapis.com/calendar/v3/calendars/6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com/events?singleEvents=true&timeMin=${utc}T00:00:00-04:00&timeMax=${utc}T23:59:59-04:00&key=AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4`
+const googleCal = `https://www.googleapis.com/calendar/v3/calendars/${calAddress}/events?singleEvents=true&timeMin=${utc}T00:00:00-04:00&timeMax=${utc}T23:59:59-04:00&key=${keyAPI}`;
 
 //main widget function
 //takes response data from API (see const response below) and runs it
@@ -76,7 +77,7 @@ const displaySchedule = (data) => {
             if (library.start.dateTime && library.end.dateTime) {
             
                 //takes given time string (ISO 8601), parses it to standard format, then returns formatted time (moments.js)
-                //i.e. "2017-03-30T21:00:00-04:00" -> "9 pm"
+                //e.g. "2017-03-30T21:00:00-04:00" -> "9 pm"
                 function timeChanger(time) {
                   const getDate = moment.parseZone(time);
                   const formatDate = getDate.format("h a");
@@ -89,9 +90,9 @@ const displaySchedule = (data) => {
                 let endTime = timeChanger(library.end.dateTime);
                
       
-                  //so excited the ES2015 makes concatting so much easier
+                  //so excited  ES2015 makes concatting so much easier
                   //creates list item for each event in the calendar array
-                  //i.e. North Meridian: 8 am - 9 pm
+                  //e.g. North Meridian: 8 am - 9 pm
                   listHTML += `<li>${library.description}: ${startTime} - ${endTime}</li>`;
               
             //otherwise, it's closed! (dateTime returns undefined)
