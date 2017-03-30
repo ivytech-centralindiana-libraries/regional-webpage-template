@@ -1,34 +1,61 @@
-<script>
-
-//based on the portal's "moreStruggling.html" version of the google calendar api call
-//see this code in action on central indiana website's hidden page "Hours (google api)"
-//requires lodash.js and moments.js
+<!--===========
+- based on the portal's "moreStruggling.html" version of the google calendar api call
+- see this code in action on central indiana test website: http://library.ivytech.edu/c.php?g=644195&p=4513157
+- requires lodash.js and moments.js
 
 /*
 
-//============= calendar address ===========
+//============= calendar address ==============
 obtained from google calendar settings page: 6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com
 
-//================ key ================
+//================ key ===================
 obtained from google developers console: AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4
+
+//==== google calendar api list events docs ======
+https://developers.google.com/google-apps/calendar/v3/reference/events/list
 
 */
 
+===============-->
 
-//set up date/time variables (moments.js)
+<!-- ===== library CDN scripts ===== -->
+
+<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<!-- ===== the three lines of HTML ===== -->
+
+<h3>Today's Hours</h3>
+<p id="todays-date"></p>
+<div id="hours-list"></div>
+
+<!-- ========= the magic ============== -->
+
+<script>
+
+
+
+//====set up date/time variables (moments.js)
+
+//get today's date
 const date = moment();
+
+//format it so it's in plain english
+//e.g. Thursday, March 30, 2017
 const today = date.format("dddd, MMMM D, YYYY");
 
+//append today's date to empty div
 $('#todays-date').append(today);
 
-//create variable to hold utc-style date (moments.js)
+//create variable to hold utc-style of today's date (moments.js)
 const utc = date.format("YYYY-MM-DD");
 
 //inject today's date in YYYY-MM-DD format to the API URL
 //this url returns only the events scheduled for today
 const googleCal = `https://www.googleapis.com/calendar/v3/calendars/6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com/events?singleEvents=true&timeMin=${utc}T00:00:00-04:00&timeMax=${utc}T23:59:59-04:00&key=AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4`
 
-
+//main widget function
+//takes response data from API (see const response below) and runs it
 const displaySchedule = (data) => {
  
         
@@ -83,6 +110,7 @@ const displaySchedule = (data) => {
         
 } //end display schedule function
 
+//google calendar API request call
 const response = $.getJSON(googleCal, displaySchedule);
   
 </script>
