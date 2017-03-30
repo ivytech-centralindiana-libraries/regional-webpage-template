@@ -1,0 +1,57 @@
+<!-- 
+================================
+*FAQ page custom code*
+All of this code goes in a box on the Central Indiana group's "Frequntly Asked Questions" page to make the images with text in them as navigation
+================================
+-->
+
+<!-- FAQ page custom CSS -->
+<style type="text/css">.cat-wrapper {
+    text-align:center;
+    position:relative;
+    margin: 10px 0;
+  }
+.cat-wrapper img {
+    max-width:20em;
+  }
+.link-wrapper {
+    line-height:1.1;
+  }
+.link-wrapper a, .link-wrapper a:hover {
+    position:absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%); 
+    font-family:'Open Sans';
+    font-size:40px;
+    color:black;
+    font-weight:700;
+    width:60%;
+  }
+ .link-wrapper a:hover{
+    font-style:italic;
+    text-decoration:none;
+  }
+</style>
+
+<div class="row">
+<div class="col-md-4 categories">
+<div class="cat-wrapper"><img alt="How to Find" src="//s3.amazonaws.com/libapps/accounts/41961/images/how-to-find-blank.png" style="width: 250px; height: 250px;" />
+<div class="link-wrapper"><a href="http://ivytech.libanswers.com/central-indiana/search/?t=0&amp;adv=1&amp;topics=how%20to%20find">how to find</a></div>
+</div>
+</div>
+
+<div class="col-md-4 categories">
+<div class="cat-wrapper"><img alt="Citing Sources" src="//s3.amazonaws.com/libapps/accounts/41961/images/citing-sources-blank.png" style="width: 250px; height: 250px;" />
+<div class="link-wrapper"><a href="http://ivytech.libanswers.com/central-indiana/search/?t=0&amp;adv=1&amp;topics=Citing%20Sources">citing sources</a></div>
+</div>
+</div>
+
+<div class="col-md-4 categories">
+<div class="cat-wrapper"><img alt="Using the Library" src="//s3.amazonaws.com/libapps/accounts/41961/images/using-the-library-blank.png" style="width: 250px; height: 250px;" />
+<div class="link-wrapper"><a href="http://ivytech.libanswers.com/central-indiana/search/?t=0&amp;adv=1&amp;topics=using%20the%20library">using the library</a></div>
+</div>
+</div>
+<script>
+$('.s-la-public-header-description').replaceWith( $('#s-la-page-column-0'));
+</script></div>

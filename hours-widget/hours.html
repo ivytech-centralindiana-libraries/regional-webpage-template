@@ -1,0 +1,116 @@
+<!--===========
+- based on the portal's "moreStruggling.html" version of the google calendar api call
+- see this code in action on central indiana test website: http://library.ivytech.edu/c.php?g=644195&p=4513157
+- requires lodash.js and moments.js
+
+/*
+
+//============= calendar address ==============
+obtained from google calendar settings page: 6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com
+
+//================ key ===================
+obtained from google developers console: AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4
+
+//==== google calendar api list events docs ======
+https://developers.google.com/google-apps/calendar/v3/reference/events/list
+
+*/
+
+===============-->
+
+<!-- ===== library CDN scripts ===== -->
+
+<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<!-- ===== the three lines of HTML ===== -->
+
+<h3>Today's Hours</h3>
+<p id="todays-date"></p>
+<div id="hours-list"></div>
+
+<!-- ========= the magic ============== -->
+
+<script>
+
+
+
+//====set up date/time variables (moments.js)
+
+//get today's date
+const date = moment();
+
+//format it so it's in plain english
+//e.g. Thursday, March 30, 2017
+const today = date.format("dddd, MMMM D, YYYY");
+
+//append today's date to empty div
+$('#todays-date').append(today);
+
+//create variable to hold utc-style of today's date (moments.js)
+const utc = date.format("YYYY-MM-DD");
+
+//inject today's date in YYYY-MM-DD format to the API URL
+//this url returns only the events scheduled for today
+const googleCal = `https://www.googleapis.com/calendar/v3/calendars/6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com/events?singleEvents=true&timeMin=${utc}T00:00:00-04:00&timeMax=${utc}T23:59:59-04:00&key=AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4`
+
+//main widget function
+//takes response data from API (see const response below) and runs it
+const displaySchedule = (data) => {
+ 
+        
+        //returns an array that holds all calendar data for specific day (lodash.js)
+        const libraries = _.filter(response.responseJSON.items);
+        
+        
+        	//sorted by reverse alphabetical order (lodash.js)
+          const sorted = _.orderBy(libraries, 'description', 'desc');
+        
+        //and placed in a list
+        let listHTML = '<ul>';
+         
+          //loops through each event in the sorted libraries array/google calendar events (lodash.js)
+          _.forEach(sorted, function(library) {
+            
+            //if there is a dateTime key in the start and end of the calendar event
+            if (library.start.dateTime && library.end.dateTime) {
+            
+                //takes given time string (ISO 8601), parses it to standard format, then returns formatted time (moments.js)
+                //i.e. "2017-03-30T21:00:00-04:00" -> "9 pm"
+                function timeChanger(time) {
+                  const getDate = moment.parseZone(time);
+                  const formatDate = getDate.format("h a");
+                  return formatDate;
+                }
+                
+                //setting up variables to grab start and end times from the google calendar API
+                //put those times through time changer function
+                let startTime = timeChanger(library.start.dateTime);
+                let endTime = timeChanger(library.end.dateTime);
+               
+      
+                  //so excited the ES2015 makes concatting so much easier
+                  //creates list item for each event in the calendar array
+                  //i.e. North Meridian: 8 am - 9 pm
+                  listHTML += `<li>${library.description}: ${startTime} - ${endTime}</li>`;
+              
+            //otherwise, it's closed! (dateTime returns undefined)
+            } else {
+              
+                  listHTML += `<li>${library.description}: Closed</li>`;
+            }
+          }); //end of foreach loop
+        
+        listHTML += '</ul>';
+        
+        //empty old schedule list (may be unnecessary, but you never know) and replace with new list
+        $('#hours-list').empty();
+        $('#hours-list').append(listHTML);
+        
+        
+} //end display schedule function
+
+//google calendar API request call
+const response = $.getJSON(googleCal, displaySchedule);
+  
+</script>
