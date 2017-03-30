@@ -1,0 +1,62 @@
+<script>
+
+//based on the portal's "moreStruggling.html" version of the google calendar api call
+//see this code in action on central indiana website's hidden page "Hours (google api)"
+//requires _lodash
+
+//calendar address: 6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com
+//key (as of 3/29/17): AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4
+
+const date = new Date();
+const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+const today = date.toLocaleString('en-US', options);
+
+$('#todays-date').append(today);
+
+const utc = date.toJSON().slice(0,10);
+
+const googleCal = `https://www.googleapis.com/calendar/v3/calendars/6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com/events?singleEvents=true&timeMin=${utc}T00:00:00-04:00&timeMax=${utc}T23:59:59-04:00&key=AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4`
+
+
+const displaySchedule = (data) => {
+ 
+        
+        //returns an array that holds all calendar data for specific day
+        const libraries = _.filter(response.responseJSON.items);
+       
+        	//sorted by time in
+       // var sorted = _.sortBy(CIdatabases, 'name');
+        
+         //and placed in a list
+        let listHTML = '<ul>';
+         
+             
+          _.forEach(libraries, function(library) {
+              let startTime = library.start.dateTime;
+              startTime = startTime.toUTCString();
+              const endTime = library.end.dateTime;
+              
+              listHTML += '<li>';
+              listHTML += library.summary;
+              listHTML += '- description: ';
+              listHTML += library.description;
+              listHTML += ', start: '
+              listHTML += startTime;
+              listHTML += ', end: '
+              listHTML += endTime;
+              listHTML += '</li>'
+              
+          });
+        
+        listHTML += '</ul>';
+        
+        //empty old schedule list (may be unnecessary, but you never know) and replace with new list
+        $('#hours-list').empty();
+        $('#hours-list').append(listHTML);
+        
+        
+          }
+
+const response = $.getJSON(googleCal, displaySchedule);
+  
+</script>
