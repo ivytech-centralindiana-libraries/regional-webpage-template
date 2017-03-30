@@ -2,14 +2,13 @@
 
 //based on the portal's "moreStruggling.html" version of the google calendar api call
 //see this code in action on central indiana website's hidden page "Hours (google api)"
-//requires _lodash
+//requires lodash.js and moments.js
 
 //calendar address: 6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com
-//key (as of 3/29/17): AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4
+//key (as of 3/30/17): AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4
 
-const date = new Date();
-const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
-const today = date.toLocaleString('en-US', options);
+const date = moment();
+const today = date.format("dddd, MMMM D, YYYY");
 
 $('#todays-date').append(today);
 
@@ -23,29 +22,34 @@ const displaySchedule = (data) => {
         
         //returns an array that holds all calendar data for specific day
         const libraries = _.filter(response.responseJSON.items);
-       
-        	//sorted by time in
-       // var sorted = _.sortBy(CIdatabases, 'name');
+        
+        
+        	//sorted by reverse alphabetical order
+          let sorted = _.orderBy(libraries, 'name', 'desc');
         
          //and placed in a list
-        let listHTML = '<ul>';
+         let listHTML = '<ul>';
          
-             
-          _.forEach(libraries, function(library) {
-              let startTime = library.start.dateTime;
-              startTime = startTime.toUTCString();
-              const endTime = library.end.dateTime;
-              
-              listHTML += '<li>';
-              listHTML += library.summary;
-              listHTML += '- description: ';
-              listHTML += library.description;
-              listHTML += ', start: '
-              listHTML += startTime;
-              listHTML += ', end: '
-              listHTML += endTime;
-              listHTML += '</li>'
-              
+          //loops through each event in the sorted libraries array (google calendar events)
+          _.forEach(sorted, function(library) {
+            
+            //takes given time string (ISO 8601), parses it to standard format, then returns formatted time
+            //i.e. "2017-03-30T21:00:00-04:00" -> "9 pm"
+            function timeChanger(time) {
+              const getDate = moment.parseZone(time);
+              const formatDate = getDate.format("h a");
+              return formatDate;
+            }
+            
+            //setting up variables to grab start and end times from the google calendar API
+            let startTime = timeChanger(library.start.dateTime);
+            let endTime = timeChanger(library.end.dateTime);
+  
+              //so excited the ES2015 makes concatting so much easier
+              //creates list item for each event in the calendar array
+              //i.e. North Meridian: 8 am - 9 pm
+              listHTML += `<li>${library.description}: ${startTime} - ${endTime}`;
+   
           });
         
         listHTML += '</ul>';
