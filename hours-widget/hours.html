@@ -7,33 +7,38 @@
 //calendar address: 6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com
 //key (as of 3/30/17): AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4
 
+
+//set up date/time variables (moments.js)
 const date = moment();
 const today = date.format("dddd, MMMM D, YYYY");
 
 $('#todays-date').append(today);
 
-const utc = date.toJSON().slice(0,10);
+//create variable to hold utc-style date (moments.js)
+const utc = date.format("YYYY-MM-DD");
 
+//inject today's date in YYYY-MM-DD format to the API URL
+//this url only returns the events scheduled for today
 const googleCal = `https://www.googleapis.com/calendar/v3/calendars/6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com/events?singleEvents=true&timeMin=${utc}T00:00:00-04:00&timeMax=${utc}T23:59:59-04:00&key=AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4`
 
 
 const displaySchedule = (data) => {
  
         
-        //returns an array that holds all calendar data for specific day
+        //returns an array that holds all calendar data for specific day (lodash.js)
         const libraries = _.filter(response.responseJSON.items);
         
         
-        	//sorted by reverse alphabetical order
+        	//sorted by reverse alphabetical order (lodash.js)
           let sorted = _.orderBy(libraries, 'name', 'desc');
         
          //and placed in a list
          let listHTML = '<ul>';
          
-          //loops through each event in the sorted libraries array (google calendar events)
+          //loops through each event in the sorted libraries array/google calendar events (lodash.js)
           _.forEach(sorted, function(library) {
             
-            //takes given time string (ISO 8601), parses it to standard format, then returns formatted time
+            //takes given time string (ISO 8601), parses it to standard format, then returns formatted time (moments.js)
             //i.e. "2017-03-30T21:00:00-04:00" -> "9 pm"
             function timeChanger(time) {
               const getDate = moment.parseZone(time);
