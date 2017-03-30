@@ -4,8 +4,15 @@
 //see this code in action on central indiana website's hidden page "Hours (google api)"
 //requires lodash.js and moments.js
 
-//calendar address: 6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com
-//key (as of 3/30/17): AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4
+/*
+
+//============= calendar address ===========
+obtained from google calendar settings page: 6kuplvcd1jd17s8fjlm2ohad0s@group.calendar.google.com
+
+//================ key ================
+obtained from google developers console: AIzaSyCW8BnWqQ2Cytq6K0mZ9K2nomEc8jwzK-4
+
+*/
 
 
 //set up date/time variables (moments.js)
@@ -30,10 +37,10 @@ const displaySchedule = (data) => {
         
         
         	//sorted by reverse alphabetical order (lodash.js)
-          let sorted = _.orderBy(libraries, 'name', 'desc');
+          const sorted = _.orderBy(libraries, 'description', 'desc');
         
-         //and placed in a list
-         let listHTML = '<ul>';
+        //and placed in a list
+        let listHTML = '<ul>';
          
           //loops through each event in the sorted libraries array/google calendar events (lodash.js)
           _.forEach(sorted, function(library) {
@@ -50,6 +57,7 @@ const displaySchedule = (data) => {
                 }
                 
                 //setting up variables to grab start and end times from the google calendar API
+                //put those times through time changer function
                 let startTime = timeChanger(library.start.dateTime);
                 let endTime = timeChanger(library.end.dateTime);
                
@@ -62,9 +70,9 @@ const displaySchedule = (data) => {
             //otherwise, it's closed! (dateTime returns undefined)
             } else {
               
-                listHTML += `<li>${library.description}: Closed</li>`;
+                  listHTML += `<li>${library.description}: Closed</li>`;
             }
-          });
+          }); //end of foreach loop
         
         listHTML += '</ul>';
         
@@ -73,7 +81,7 @@ const displaySchedule = (data) => {
         $('#hours-list').append(listHTML);
         
         
-          }
+} //end display schedule function
 
 const response = $.getJSON(googleCal, displaySchedule);
   
