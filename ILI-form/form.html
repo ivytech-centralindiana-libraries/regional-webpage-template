@@ -1,0 +1,92 @@
+<!--
+==========================================
+borrowed from https://github.com/heaversm/google-custom-form
+reworked for Ivy Tech Lawrence Library ILI Request Form
+==========================================
+
+-->
+
+<script type="text/javascript" src="//s3.amazonaws.com/libapps/sites/103/include/dcalendar.picker.js"></script>
+
+<form id="input-form" action="" method="POST" target="no-target">
+  <div class="class-location"><span class="loc-description">Quick Class Visits</span></div>
+  <input id="input-q1" type="checkbox" value="Add to Cart" name="entry.1872902617"><h3 class="class-title"> Librarian Drop-In <span class="time">(5 minutes)</span></h3><br>
+  <p class="ili-description">Your librarian will drop in to introduce themselves and the library website to students.
+  </p>
+  <input id="input-q2" type="checkbox"  value="Add to Cart" name="entry.2013278331"><h3 class="class-title"> Quick Intro to Library Resources <span class="time">(20 minutes)</span></h3><br>
+  <p class="ili-description">Your librarian will drop in to introduce themselves to students, discuss how they can support the students' work in your class, and briefly describe library services and resources.</p>
+  <hr>
+  <div class="class-location"><span class="loc-description">Instruction at the Library</span></div>
+  <input type="checkbox" value="Add to Cart" name="entry.483319453"><h3 class="class-title"> Introduction to Research <span class="time">(75 minutes)</span></h3><br>
+  <p class="ili-description">In-depth overview of library resources and instruction on information-seeking skills and concepts.</p>
+  <input type="checkbox" value="Add to Cart" name="entry.1736637257"><h3 class="class-title"> Library Orientation <span class="time">(45 minutes)</span></h3><br>
+  <p class="ili-description">Brief overview of website, subject guides, subject-specific databases, and a physical tour.</p>
+   <input type="checkbox" value="Add to Cart" name="entry.1383517523"><h3 class="class-title"> Subject-Specific Research <span class="time">(20 minutes)</span></h3><br>
+   <p class="ili-description">Overview of subject-specific resources (books, databases, websites).&nbsp;Students must have taken Library Orientation or scheduled in same class time.
+</p>
+  <input type="checkbox" value="Add to Cart" name="entry.518912775"><h3 class="class-title"> Annotated Bibliography <span class="time">(20 minutes)</span></h3><br>
+  <p class="ili-description">Students will view sample annotated bibliographies and learn about the three parts of an annotation: citation, summary, and evaluation.</p>
+    <input type="checkbox" value="Add to Cart" name="entry.420046994"><h3 class="class-title"> Citation and Formatting <span class="time">(20 minutes)</span></h3><br>
+    <p class="ili-description">APA or MLA citation formatting and Word document formatting.</p>
+  <input type="checkbox" value="Add to Cart" name="entry.1309495558"><h3 class="class-title"> NoodleTools <span class="time">(30 minutes)</span></h3><br>
+  
+  <p class="ili-description">Walk-through; students must have registered for NoodleTools before coming to the library.</p>
+  <hr>
+  <div class="class-location"><span class="loc-description">Your Information</span></div>
+  Instructor's Name<br>
+  
+ <input name="entry.1063659628" style="width:70%" type="text" value="" /><br />
+Instructor&#39;s Email<br />
+<input name="entry.1661499415" style="width:70%" type="text" value="" /><br />
+Course Name/Number<br />
+<input name="entry.632794592" type="text" value="" onchange="formChanged()" /><br />
+Class Time<br />
+<input name="entry.1567052872" type="text" value="" onchange="formChanged()" /><br />
+Requested Date<br />
+<input class="date" name="entry.2061397332" type="text" value="" onchange="formChanged()" /><br />
+Number of Students<br />
+<input name="entry.1921107125" type="text" value="" /><br />
+<br />
+<button id="form-submit" type="submit">SUBMIT</button></form><br />
+<p id="input-feedback"></p>
+
+<p style="height:0;"><iframe id="no-target" name="no-target" src="" style="visibility:hidden"></iframe></p>
+
+
+
+<script>
+
+//watches inputs from the form that are spit out in the submission message
+function formChanged(){
+      var courseName = document.getElementsByName("entry.632794592")[0].value;
+      var instructionDate = document.getElementsByName("entry.2061397332")[0].value;
+      var instructionTime = document.getElementsByName("entry.1567052872")[0].value;
+
+  //date picker plugin
+    $('input.date').dcalendarpicker();
+    
+
+
+//For some reason, this checks the checkboxes, but the textboxes submit themselves without needing to check for them being filled out (???)
+
+    var isChecked = $( "input[type='checkbox']" ).serialize().replace('/\+/g','%20');
+    
+//Submission behavior
+    
+    $('form').one('submit',function(){
+      
+      //concatonates the Google submission form pieces together
+      var baseURL = 'https://docs.google.com/forms/d/e/1FAIpQLSfVHcNVMCDQeWpC2ah-nBMamu0rlBQ5xQTYKtbr59V3Hnt0kA/formResponse';
+      var submitRef = '&submit=3483183719070467546';
+      var submitURL = (baseURL + '?' + isChecked + submitRef);
+      
+      //sends full URL to google and posts message on the ILI menu page
+      console.log(submitURL);
+      $(this)[0].action = submitURL;
+      $('#input-feedback').html( '<span>Thank You! You have requested a session for <span style="font-weight:700;">' + courseName + '</span> on <span style="font-weight:700;">' + instructionDate + '</span> at <span style="font-weight:700;">' + instructionTime + '</span>. To submit another form, change the class time and date above and hit Submit again.</span>' );
+      
+    });
+
+}
+
+</script>
