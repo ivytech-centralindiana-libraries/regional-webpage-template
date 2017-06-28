@@ -3,7 +3,7 @@
 LAST UPDATED: 06.28.17 to reflect table HTML instead of unordered list
 
 - based on the portal's "moreStruggling.html" version of the google calendar api call
-- see this code in action on central indiana test website: http://library.ivytech.edu/c.php?g=644195&p=4513157
+- see this code in action on central indiana "summer 17" test website: http://library.ivytech.edu/c.php?g=686311
 - requires lodash.js and moments.js
 
 /*
@@ -72,7 +72,7 @@ const displaySchedule = (data) => {
         
         
         	//sorted by reverse alphabetical order (lodash.js)
-          const sorted = _.orderBy(libraries, ['summary'], ['desc']);
+          const sorted = _.orderBy(libraries, 'summary', 'desc');
         
         //and placed in a table
         let tableHTML = '<tbody>';
@@ -98,8 +98,8 @@ const displaySchedule = (data) => {
                
       
                   //so excited  ES2015 makes concatting so much easier
-                  //creates list item for each event in the calendar array
-                  //e.g. North Meridian: 8 am - 9 pm
+                  //creates table row for each event in the calendar array
+                  //e.g. | Downtown | 8 am - 9 pm |
                  tableHTML += `<tr><td class="library-location">${library.description}</td><td>${startTime} - ${endTime}</td></tr>`;
               
             //if there is no description in the event, skip it
@@ -117,7 +117,7 @@ const displaySchedule = (data) => {
         
         tableHTML += '</tbody>';
         
-        //empty old schedule list (may be unnecessary, but you never know) and replace with new list
+        //empty old schedule tbody (may be unnecessary, but you never know) and replace with new tbody
         $('#hours-grid').empty();
         $('#hours-grid').append(tableHTML);
         
@@ -128,3 +128,4 @@ const displaySchedule = (data) => {
 const response = $.getJSON(googleCal, displaySchedule);
   
 </script>
+
