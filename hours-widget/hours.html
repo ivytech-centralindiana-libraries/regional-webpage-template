@@ -1,4 +1,7 @@
 <!--===========
+
+LAST UPDATED: 06.28.17 to reflect table HTML instead of unordered list
+
 - based on the portal's "moreStruggling.html" version of the google calendar api call
 - see this code in action on central indiana test website: http://library.ivytech.edu/c.php?g=644195&p=4513157
 - requires lodash.js and moments.js
@@ -25,7 +28,11 @@ https://developers.google.com/google-apps/calendar/v3/reference/events/list
 
 <h3>Today's Hours</h3>
 <p id="todays-date"></p>
-<div id="hours-list"></div>
+<div class="table-responsive">
+  <table class="table table-condensed table-hover" id="hours-grid">
+  </table>
+</div>
+<p style=><a class="more-link" href="http://library.ivytech.edu/central-indiana/hours">See all hours and locations  <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
 
 <!-- ========= the magic ============== -->
 
@@ -65,10 +72,10 @@ const displaySchedule = (data) => {
         
         
         	//sorted by reverse alphabetical order (lodash.js)
-          const sorted = _.orderBy(libraries, 'description', 'desc');
+          const sorted = _.orderBy(libraries, ['summary'], ['desc']);
         
-        //and placed in a list
-        let listHTML = '<ul>';
+        //and placed in a table
+        let tableHTML = '<tbody>';
          
           //loops through each event in the sorted libraries array/google calendar events (lodash.js)
           _.forEach(sorted, function(library) {
@@ -93,20 +100,26 @@ const displaySchedule = (data) => {
                   //so excited  ES2015 makes concatting so much easier
                   //creates list item for each event in the calendar array
                   //e.g. North Meridian: 8 am - 9 pm
-                  listHTML += `<li>${library.description}: ${startTime} - ${endTime}</li>`;
+                 tableHTML += `<tr><td class="library-location">${library.description}</td><td>${startTime} - ${endTime}</td></tr>`;
               
+            //if there is no description in the event, skip it
+              //this usually happens if we're on break, dionna will add an event called "spring break" but doesn't include description
+            } else if (!library.description) {
+              
+              return;
+            
             //otherwise, it's closed! (dateTime returns undefined)
             } else {
               
-                  listHTML += `<li>${library.description}: Closed</li>`;
+                  tableHTML += `<tr><td class="library-location">${library.description}</td><td>Closed</td></li>`;
             }
           }); //end of foreach loop
         
-        listHTML += '</ul>';
+        tableHTML += '</tbody>';
         
         //empty old schedule list (may be unnecessary, but you never know) and replace with new list
-        $('#hours-list').empty();
-        $('#hours-list').append(listHTML);
+        $('#hours-grid').empty();
+        $('#hours-grid').append(tableHTML);
         
         
 } //end display schedule function
