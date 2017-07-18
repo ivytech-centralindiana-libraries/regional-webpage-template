@@ -52,70 +52,156 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
   
   $.getJSON(subjectIDsAPI, function(data) {
 
-  // create empty array where objects {guide: xyz, subject: xyz} will go
-	var guideSubjectArray =[];
-     
-    // for each object in the JSON file
-    data.forEach(function(guide) {
-    
-      // take guide name and subject and push it to the guide-subject array
-      guideSubjectArray.push({name: [guide.name], subject: [guide.subjects[0].name]});
-      
-    })
-    
-  
-  // create arrays to 1) sort subjects alphabetically, and 2) hold guide count by subject
-	var sortedArray = _.orderBy(guideSubjectArray, "subject[0]", "asc");
-	var uniqueArray = _.countBy(sortedArray, "subject[0]");
-	
-	// create counter for panel accordion collapse action
-	var counter = 0;
-	
-	//create tile for each subject  (includes number of guides in subject)
-	//when tile clicked, reveal list of guides; when clicked again, list disappears (accordion panel style)
-	 var subjectList = `<div class="panel-group" id="accordion">`;
-	 
-	//loop through subjects and numbers and create list items
-	_.forEach(uniqueArray, function(number, subject) {
-	  
-	   
-      subjectList += `<div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h5 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse${counter}" aria-expanded="false">
-                              ${subject}<span class="badge badge-default badge-pill">${number}</span>
-                            </a>
-                          </h5>
-                        </div>
-                        <div id="collapse${counter}" class="panel-collapse collapse">
-                          <div class="panel-body">
-                          <ul>`
-                            
-                          
-                            
-                            _.forEach(data, function(guide) {
-                                
-                                if (subject === guide.subjects[0].name) {
-                                  
-                                  subjectList += `<li><a href="${guide.friendly_url}">${guide.name}</a></li>`;
-                                }
-                              
-                            })
-                            
-                            
-      subjectList+=       `</ul>
-                          </div>
-                        </div>
-                      </div>`
+      // create empty array where objects {guide: xyz, subject: xyz} will go
+    	var guideSubjectArray =[];
        
-      counter++;
-  });
+      // for each object in the JSON file
+      data.forEach(function(guide) {
+          
+              // create empty object for pushing into array
+          	  var nameSubjectObj = {};
+              
+          	  // set object key/values
+              nameSubjectObj["name"] = guide.name;
+          	  nameSubjectObj["subject"] = guide.subjects[0].name;
+              
+              // take object full of name/subject key/value pairs and push it to the guide-subject array
+              guideSubjectArray.push(nameSubjectObj);
+      
+      })
+    
   
-  subjectList += `</div>`;
+        // create arrays to 1) sort subjects alphabetically, and 2) hold guide count by subject
+      	var sortedArray = _.orderBy(guideSubjectArray, "subject", "asc");
+      	var uniqueArray = _.countBy(sortedArray, "subject");
+      	
+      	// create counter for panel accordion collapse action
+      	var panelCounter = 0;
+      	
+      	//create tile for each subject  (includes count of guides in subject)
+      	//when tile clicked, reveal list of guides; when clicked again, list disappears (accordion panel style)
+      	 var subjectList = `<div class="panel-group" id="accordion">`;
+	 
+      	//loop through subjects and count and create list items
+      	_.forEach(uniqueArray, function(count, subject) {
+      	   
+            subjectList += `<div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h5 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse${ var subjectIDs = [129750,129756,129761,129759,129758,129753,129754,129752,119567,129762,129750,129751,129760,33505,129757,129755];
+  var subjectString = subjectIDs.toString();
+  var subjectSlug = `&subject_ids=${subjectString}`;
+  var subjectIDsAPI = `http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527${subjectSlug}&expand=subjects&tag_names[]=Central%20Indiana%20Region&status[]=1&sort_by=name`;
   
-	
-	$('#published-guides').empty();
-  $('#published-guides').append(subjectList);
+// ===== lodash methods =====================
+  
+ 
+  
+  $.getJSON(subjectIDsAPI, function(data) {
+
+      // create empty array where objects {guide: xyz, subject: xyz} will go
+    	var guideSubjectArray =[];
+       
+      // for each object in the JSON file
+      data.forEach(function(guide) {
+          
+              // create empty object for pushing into array
+          	  var nameSubjectObj = {};
+              
+          	  // set object key/values
+              nameSubjectObj["name"] = guide.name;
+          	  nameSubjectObj["subject"] = guide.subjects[0].name;
+              
+              // take object full of name/subject key/value pairs and push it to the guide-subject array
+              guideSubjectArray.push(nameSubjectObj);
+      
+      })
+    
+  
+        // create arrays to 1) sort subjects alphabetically, and 2) hold guide count by subject
+      	var sortedArray = _.orderBy(guideSubjectArray, "subject", "asc");
+      	var uniqueArray = _.countBy(sortedArray, "subject");
+      	
+      	// create counter for panel accordion collapse action
+      	var panelCounter = 0;
+      	
+      	//create tile for each subject  (includes count of guides in subject)
+      	//when tile clicked, reveal list of guides; when clicked again, list disappears (accordion panel style)
+      	 var subjectList = `<div class="panel-group" id="accordion">`;
+	 
+      	//loop through subjects and count and create list items
+      	_.forEach(uniqueArray, function(count, subject) {
+      	   
+            subjectList += `<div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h5 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse${counter}" aria-expanded="false">
+                                    ${subject}<span class="badge badge-default badge-pill">${count}</span>
+                                  </a>
+                                </h5>
+                              </div>
+                              <div id="collapse${panelCounter}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                <ul>`
+                                  
+                                  
+                                  _.forEach(data, function(guide) {
+                                      
+                                      if (subject === guide.subjects[0].name) {
+                                        
+                                        subjectList += `<li><a href="${guide.friendly_url}">${guide.name}</a></li>`;
+                                      }
+                                    
+                                  })
+                                  
+                                  
+            subjectList+=       `</ul>
+                                </div>
+                              </div>
+                            </div>`
+             
+            panelCounter += 1;
+        });
+  
+        subjectList += `</div>`;
+        
+      	
+      	$('#published-guides').empty();
+        $('#published-guides').append(subjectList);
+    
+  });}" aria-expanded="false">
+                                    ${subject}<span class="badge badge-default badge-pill">${count}</span>
+                                  </a>
+                                </h5>
+                              </div>
+                              <div id="collapse${panelCounter}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                <ul>`
+                                  
+                                  
+                                  _.forEach(data, function(guide) {
+                                      
+                                      if (subject === guide.subjects[0].name) {
+                                        
+                                        subjectList += `<li><a href="${guide.friendly_url}">${guide.name}</a></li>`;
+                                      }
+                                    
+                                  })
+                                  
+                                  
+            subjectList+=       `</ul>
+                                </div>
+                              </div>
+                            </div>`
+             
+            panelCounter += 1;
+        });
+  
+        subjectList += `</div>`;
+        
+      	
+      	$('#published-guides').empty();
+        $('#published-guides').append(subjectList);
     
   });
 
