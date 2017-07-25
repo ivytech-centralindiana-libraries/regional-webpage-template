@@ -45,6 +45,7 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
   var subjectString = subjectIDs.toString();
   var subjectSlug = `&subject_ids=${subjectString}`;
   var subjectIDsAPI = `http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527${subjectSlug}&expand=subjects&tag_names[]=Central%20Indiana%20Region&status[]=1&sort_by=name`;
+  var stringIDs = subjectIDs.map(String);
   
 // ===== lodash methods =====================
   
@@ -68,25 +69,37 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
               nameSubjectObj["name"] = guide.name;
           	  nameSubjectObj["subject"] = subjects;
           	  
-          	  //new crazy shit
-          	  // somewhere in here needs to be an if statement to the effect of:
-          	      // if (_.includes(subjectIDs, ID#)) push name to subjects array
-          	      
-          	  for (let item of guide.subjects) {
-            
+          	  // here's where it starts getting complicated
+          	  
+              // for every subject of each guide
+          	   for (let item of guide.subjects) {
+                  
+                  // loop through subjects
             			for (let key in item) {
-            				 
-            				if (key == "name") {
-            					subjects.push(item[key]);
-                                
-                             }
-                        }
-            				// console.log(item);
-                    }
+            			  
+							      // create variable for ID string from JSON
+							      var idNumber = item[key];
+						          
+						          // if that ID number is also in the subject ID array
+						          // (this excludes any subjects that were assigned to the guide outside of these specific subjects)
+      							  if ((_.includes(stringIDs, idNumber)) && key == "id" ) {
+       								      
+       								      //=========== TO DO =================
+       								      //
+       								      // need a step here that loops through each object and prints each subject with the name of the guide
+       								      // right now it's smashing subject names together when a guide has more than one subject
+       								      //
+       								      
+      					            // push only the selected subjects' name to the subjects array
+      					            // which will then be spit out with the name of the guide  (nameSubjectObj >> guideSubjectArray)
+                  					subjects.push(item["name"]);
+      							  }
+      
+                   }
+
+                }
                      
-                    
-             
-              
+
               // take object full of name/subject key/value pairs and push it to the guide-subject array
               guideSubjectArray.push(nameSubjectObj);
               console.log(nameSubjectObj);
