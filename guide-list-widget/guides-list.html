@@ -67,23 +67,26 @@
       
       })
       
-      // for each guide in guideSubjectArray, make sure if multiple subjects, each is being pushed to new array
+      // array where new name/subject/url objects (thisGuide) will be pushed
       var allSubjects = [];
-      
-      for (let guide of guideSubjectArray) {
-        	var thisGuide = new Object();
-          thisGuide.name = guide.name;
-          thisGuide.subject = guide.subject[0];
-		  thisGuide.url = guide.url;
-      	allSubjects.push(thisGuide);
-      	if (guide.subject[1]) {
-      		var thisGuide = new Object();
-              thisGuide.name = guide.name;
-              thisGuide.subject = guide.subject[1];
-			  thisGuide.url = guide.url;
-              allSubjects.push(thisGuide);
-      	}
-      }
+		
+    // for each guide in guideSubjectArray
+       for (let guide of guideSubjectArray) {
+        
+          // and for each subject that the guide has
+    			for (val in guide.subject) {
+    
+              // create an object with name/subject/url
+              // and push it to the allSubjects array
+              // which will later be sorted by subject and each subject counted
+      		    var thisGuide = new Object();
+                	thisGuide.name = guide.name;
+                	thisGuide.subject = guide.subject[val];
+          		   	thisGuide.url = guide.url;
+          			  allSubjects.push(thisGuide);
+        		}
+
+        }
     
   
         // create arrays to 1) sort subjects alphabetically, and 2) hold guide count by subject
