@@ -69,6 +69,12 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
               nameSubjectObj["name"] = guide.name;
           	  nameSubjectObj["subject"] = subjects;
           	  
+          	  if (guide.friendly_url) {
+        					 nameSubjectObj["url"] = guide.friendly_url;
+        				} else {
+        					 nameSubjectObj["url"] = guide.url;
+                }
+          	  
           	  // here's where it starts getting complicated
           	  
               // for every subject of each guide
@@ -84,14 +90,6 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
 						          // (this excludes any subjects that were assigned to the guide outside of these specific subjects)
       							  if ((_.includes(stringIDs, idNumber)) && key == "id" ) {
        								      
-       								      //=========== TO DO =================
-       								      //
-       								      // need a step here that loops through each object and prints each subject with the name of the guide
-       								      // right now it's smashing subject names together when a guide has more than one subject
-       								      //
-       								      
-      					            // push only the selected subjects' name to the subjects array
-      					            // which will then be spit out with the name of the guide  (nameSubjectObj >> guideSubjectArray)
                   					subjects.push(item["name"]);
       							  }
       
@@ -102,13 +100,31 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
 
               // take object full of name/subject key/value pairs and push it to the guide-subject array
               guideSubjectArray.push(nameSubjectObj);
-              console.log(nameSubjectObj);
+              
       
       })
+      
+      // for each guide in guideSubjectArray, make sure if multiple subjects, each is being pushed to new array
+      var allSubjects = [];
+      
+      for (let guide of guideSubjectArray) {
+        	var thisGuide = new Object();
+          thisGuide.name = guide.name;
+          thisGuide.subject = guide.subject[0];
+		  thisGuide.url = guide.url;
+      	allSubjects.push(thisGuide);
+      	if (guide.subject[1]) {
+      		var thisGuide = new Object();
+              thisGuide.name = guide.name;
+              thisGuide.subject = guide.subject[1];
+			  thisGuide.url = guide.url;
+              allSubjects.push(thisGuide);
+      	}
+      }
     
   
         // create arrays to 1) sort subjects alphabetically, and 2) hold guide count by subject
-      	var sortedArray = _.orderBy(guideSubjectArray, "subject", "asc");
+      	var sortedArray = _.orderBy(allSubjects, "subject", "asc");
       	var uniqueArray = _.countBy(sortedArray, "subject");
       	
       	// create counter for panel accordion collapse action
@@ -134,11 +150,11 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
                                 <ul>`
                                   
                                   
-                                  _.forEach(data, function(guide) {
+                                   _.forEach(allSubjects, function(guide) {
                                       
-                                      if (subject === guide.subjects[0].name) {
+                                      if (subject === guide.subject) {
                                         
-                                        subjectList += `<li><a href="${guide.friendly_url}">${guide.name}</a></li>`;
+                                        subjectList += `<li><a href="${guide.url}">${guide.name}</a></li>`;
                                       }
                                     
                                   })
