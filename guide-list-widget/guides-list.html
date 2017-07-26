@@ -1,41 +1,4 @@
 <script>
-  
-// gathers all subjects from new subject list
-var subjectsAPI = "http://lgapi-us.libapps.com/1.1/subjects/129750,129756,129761,129759,129758,129753,129754,129752,119567,129762,129750,129751,129760,33505,129757,129755?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527";
-
-// gathers all published guides tagged Central Indiana, includes subject expansion
-var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527&expand=subjects&tag_names[]=Central%20Indiana%20Region&status[]=1&sort_by=name"
-
-
-//======= multiple ways to get this done ============
-
-// first plan: for each ID in an array of subject IDs, create a new button with name of subject and number of guides in subject tagged Central Region
-
-    // maybe try out different versions: (see stackoverflow discussion here: https://stackoverflow.com/questions/9329446/for-each-over-an-array-in-javascript)
-   
-    //  1) .forEach() method    (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
-    //  2) for...of loop        (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
-    //  3) .map() method        (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
-    //  4) .filter() method     (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
-    
-    // might need to use the push method...
-      
-      // iterate through the guides object, pulling out unique subject names and pushing to empty array
-          // how to pull out unique subjects? $.inArray()? .indexOf()? https://stackoverflow.com/questions/32742504/push-object-to-array-when-unique
-              
-              // var subjects = [];
-              // if (subjectIDs.indexOf( guide.subjects[0].id ) === -1) {
-                  // this method returns -1 if the thing you're checking for doesn't exist in the array, i.e. has no index position (less than zero)
-              //   push to the array!
-              // } else {
-              //   skip it, yo
-              // }
-            
-              // this has to be close, but double check docs: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-              
-              
-      // then iterate through new array to create buttons/links
-
 
 // START HERE ===========================
 
