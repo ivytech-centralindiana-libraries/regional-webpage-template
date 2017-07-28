@@ -7,7 +7,8 @@
   var subjectIDs = [129750,129756,129761,129759,129758,129753,129754,129752,119567,129762,129750,129751,129760,33505,129757,129755];
   var subjectString = subjectIDs.toString();
   var subjectSlug = `&subject_ids=${subjectString}`;
-  var subjectIDsAPI = `http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527${subjectSlug}&expand=subjects&tag_names[]=Central%20Indiana%20Region&status[]=1&sort_by=name`;
+  var regionSlug = `Central%20Indiana%20Region`;
+  var subjectIDsAPI = `http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527${subjectSlug}&expand=subjects&tag_names[]=${regionSlug}&status[]=1&sort_by=name`;
   var stringIDs = subjectIDs.map(String);
   
 // ===== lodash methods =====================
