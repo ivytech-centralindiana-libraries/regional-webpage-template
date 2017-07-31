@@ -1,3 +1,6 @@
+<div id="published-guides">
+<p style="font-size:24px;">LOADING...</p>
+</div>
 <script>
 
 // START HERE ===========================
@@ -106,11 +109,13 @@
       	   
             subjectList += `<div class="panel panel-default">
                               <div class="panel-heading">
-                                <h5 class="panel-title">
-                                  <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse${panelCounter}" aria-expanded="false">
-                                    ${subject}<span class="badge badge-default badge-pill">${count}</span>
+                              
+                                  <a role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapse${panelCounter}" aria-expanded="false">
+                                  <div class="badge badge-default badge-pill pull-right">${count}</div>
+                                    <div class="subject-name panel-title">${subject}</div>
+                                    
                                   </a>
-                                </h5>
+                               
                               </div>
                               <div id="collapse${panelCounter}" class="panel-collapse collapse">
                                 <div class="panel-body">
