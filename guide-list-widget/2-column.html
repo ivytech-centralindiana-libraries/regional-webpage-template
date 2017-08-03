@@ -1,14 +1,13 @@
-<div id="published-guides">
-<p style="font-size:24px;">LOADING...</p>
-</div>
-<script>
+ <script>
   var subjectIDs = [129750,129756,129761,129759,129758,129753,129754,129752,119567,129762,129750,129751,129760,33505,129757,129755];
   var subjectString = subjectIDs.toString();
   var subjectSlug = `&subject_ids=${subjectString}`;
   var regionSlug = `Central%20Indiana%20Region`;
   var subjectIDsAPI = `http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527${subjectSlug}&expand=subjects&tag_names[]=${regionSlug}&status[]=1&sort_by=name`;
   var stringIDs = subjectIDs.map(String);
- 
+  
+// ===== lodash methods =====================
+  
  
   
   $.getJSON(subjectIDsAPI, function(data) {
@@ -90,48 +89,20 @@
       	var sortedArray = _.orderBy(allSubjects, "subject", "asc");
       	var uniqueArray = _.countBy(sortedArray, "subject");
       	
-   // SPLIT SUBJECT LIST INTO TWO COLUMNS
-      
-      //counts the number of subjects in the array	
-      var subjectNumber = _.size(uniqueArray); 
-		
-      //takes uniqueArray (misnomer) object and turns it into an array
-      var subjectNameNumberArray = Object.entries(uniqueArray);
-      
-      //splits the array into two separate arrays
-      var firstColumnSubjects = _.slice(subjectNameNumberArray, [start=0], [end=(subjectNumber / 2)]);
-      var secondColumnSubjects = _.slice(subjectNameNumberArray, (subjectNumber / 2));
-
-      //takes array of arrays from above and turns them into key/value pair objects (i.e. 'Business: 3')
-			firstColumnSubjects = _.fromPairs(firstColumnSubjects);
-			secondColumnSubjects = _.fromPairs(secondColumnSubjects);
-
-			
-		//creates an array of the two arrays of objects (essentially [[{Art: 6}, {Business: 3}], [{History: 5}, {Lanugages: 4}]])
-		var columnsArray = [firstColumnSubjects, secondColumnSubjects];
-		
-		//counter for each matching individual buttons/panels to each other
-		var panelCounter = 0;
-		
-		//counter for accordion ID numbers
-		var columnCounter = 1;
-		
-		// BEGIN HTML FOR COLUMNS
-		var subjectList = `<div class="row" id="subject-accordion">`;
-
-      // for each array in the columnsArray
-		_.forEach(columnsArray, function(column) {
-          
-      // add a panel group for the accordion in that column
-			 subjectList += `<div class="panel-group col-lg-6" id="accordion-${columnCounter}">`;
-
-      // for each subject in that column array (should be half of the available subjects), create a panel heading and panel body
-			_.forEach(column, function(count, subject) {
-
-				subjectList += `<div class="panel panel-default">
+      	// create counter for panel accordion collapse action
+      	var panelCounter = 0;
+      	
+      	//create tile for each subject  (includes count of guides in subject)
+      	//when tile clicked, reveal list of guides; when clicked again, list disappears (accordion panel style)
+      	 var subjectList = `<div class="panel-group" id="accordion">`;
+	 
+      	//loop through subjects and count and create list items
+      	_.forEach(uniqueArray, function(count, subject) {
+      	   
+            subjectList += `<div class="panel panel-default">
                               <div class="panel-heading">
                               
-                                  <a role="button" data-toggle="collapse" data-parent="#accordion-${columnCounter}" data-target="#collapse${panelCounter}" aria-expanded="false">
+                                  <a role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapse${panelCounter}" aria-expanded="false">
                                   <div class="badge badge-default badge-pill pull-right">${count}</div>
                                     <div class="subject-name panel-title">${subject}</div>
                                     
@@ -140,12 +111,11 @@
                               </div>
                               <div id="collapse${panelCounter}" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                <ul>`;
+                                <ul>`
                                   
-                                  // fill each panel body with the names/links to guides in that subject
+                                  
                                    _.forEach(allSubjects, function(guide) {
                                       
-                                      //only if that subject matches the subjects in the list
                                       if (subject === guide.subject) {
                                         
                                         subjectList += `<li><a href="${guide.url}">${guide.name}</a></li>`;
@@ -154,28 +124,20 @@
                                   })
                                   
                                   
-            subjectList+=      `</ul>
+            subjectList+=       `</ul>
                                 </div>
                               </div>
-                            </div>`;
-				panelCounter += 1;
-			});
-		
-			subjectList += `</div>`;
-			columnCounter += 1;
-
-
+                            </div>`
+             
+            panelCounter += 1;
         });
-
-	
   
-    subjectList += `</div>`;
+        subjectList += `</div>`;
         
       	
       	$('#published-guides').empty();
         $('#published-guides').append(subjectList);
-  
     
   });
   
-</script>
+  </script>
