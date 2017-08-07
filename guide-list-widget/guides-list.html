@@ -1,6 +1,48 @@
 <div id="published-guides">
 <p style="font-size:24px;">LOADING...</p>
 </div>
+<style>
+
+.subject-name.panel-title, .ui-widget-content a {
+   font-family:'Open Sans', 'Arial', sans-serif;
+    text-decoration: none;
+    outline: none;
+    color: #2B8815;
+    font-weight: 700;
+    letter-spacing: .025em;
+}
+
+  .ui-tabs .ui-tabs-nav {
+    background:none;
+    border:none;
+    padding:0;
+    display: block;
+    border-bottom: 1px solid #e6e6e6;
+    padding-left:10px;
+  }
+  
+  .s-lib-jqtabs {
+    padding:0;
+    border:none;
+  }
+  .ui-tabs .ui-tabs-nav li {
+    margin-bottom:-.25px;
+
+  }
+  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    border: 1px solid #E6E6E6;
+    background: #fff!important;
+  }
+  .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default,
+  .ui-state-default:hover, .ui-widget-content .ui-state-default:hover, .ui-widget-header .ui-state-default:hover {
+    border: 1px solid #E6E6E6;
+    background: #e6e6e6;
+  }
+  #subject-accordion .panel-body ul li {
+    padding: 10px 0;
+  }
+  
+</style>
 <script>
   var subjectIDs = [129750,129756,129761,129759,129758,129753,129754,129752,119567,129762,129750,129751,129760,33505,129757,129755];
   var subjectString = subjectIDs.toString();
@@ -148,7 +190,9 @@
                                       //only if that subject matches the subjects in the list
                                       if (subject === guide.subject) {
                                         
-                                        subjectList += `<li><a href="${guide.url}">${guide.name}</a></li>`;
+                                        //remove "Central Indiana" tag from every guide title
+                                        var noTag = (guide.name).replace(" - Central Indiana", "");
+                                        subjectList += `<li><a href="${guide.url}">${noTag}</a></li>`;
                                       }
                                     
                                   })

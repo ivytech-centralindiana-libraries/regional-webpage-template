@@ -1,0 +1,15 @@
+.subject-name.panel-title {
+    text-decoration: none;
+    outline: none;
+    color: #2B8815;
+    font-weight: 700;
+    letter-spacing: .025em;
+}
+
+.subject-name.panel-title:hover {
+    text-decoration:underline;
+}
+
+.panel-body ul>li {
+    margin: 10px;
+}
