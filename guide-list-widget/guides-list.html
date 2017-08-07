@@ -1,54 +1,56 @@
-<script>
+<div id="published-guides">
+<p style="font-size:24px;">LOADING...</p>
+</div>
+<style>
+
+.subject-name.panel-title, .ui-widget-content a {
+   font-family:'Open Sans', 'Arial', sans-serif;
+    text-decoration: none;
+    outline: none;
+    color: #2B8815;
+    font-weight: 700;
+    letter-spacing: .025em;
+}
+
+  .ui-tabs .ui-tabs-nav {
+    background:none;
+    border:none;
+    padding:0;
+    display: block;
+    border-bottom: 1px solid #e6e6e6;
+    padding-left:10px;
+  }
   
-// gathers all subjects from new subject list
-var subjectsAPI = "http://lgapi-us.libapps.com/1.1/subjects/129750,129756,129761,129759,129758,129753,129754,129752,119567,129762,129750,129751,129760,33505,129757,129755?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527";
+  .s-lib-jqtabs {
+    padding:0;
+    border:none;
+  }
+  .ui-tabs .ui-tabs-nav li {
+    margin-bottom:-.25px;
 
-// gathers all published guides tagged Central Indiana, includes subject expansion
-var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527&expand=subjects&tag_names[]=Central%20Indiana%20Region&status[]=1&sort_by=name"
-
-
-//======= multiple ways to get this done ============
-
-// first plan: for each ID in an array of subject IDs, create a new button with name of subject and number of guides in subject tagged Central Region
-
-    // maybe try out different versions: (see stackoverflow discussion here: https://stackoverflow.com/questions/9329446/for-each-over-an-array-in-javascript)
-   
-    //  1) .forEach() method    (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
-    //  2) for...of loop        (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
-    //  3) .map() method        (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
-    //  4) .filter() method     (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
-    
-    // might need to use the push method...
-      
-      // iterate through the guides object, pulling out unique subject names and pushing to empty array
-          // how to pull out unique subjects? $.inArray()? .indexOf()? https://stackoverflow.com/questions/32742504/push-object-to-array-when-unique
-              
-              // var subjects = [];
-              // if (subjectIDs.indexOf( guide.subjects[0].id ) === -1) {
-                  // this method returns -1 if the thing you're checking for doesn't exist in the array, i.e. has no index position (less than zero)
-              //   push to the array!
-              // } else {
-              //   skip it, yo
-              // }
-            
-              // this has to be close, but double check docs: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-              
-              
-      // then iterate through new array to create buttons/links
-
-
-// START HERE ===========================
-
-//global variables
-
+  }
+  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    border: 1px solid #E6E6E6;
+    background: #fff!important;
+  }
+  .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default,
+  .ui-state-default:hover, .ui-widget-content .ui-state-default:hover, .ui-widget-header .ui-state-default:hover {
+    border: 1px solid #E6E6E6;
+    background: #e6e6e6;
+  }
+  #subject-accordion .panel-body ul li {
+    padding: 10px 0;
+  }
+  
+</style>
+<script>
   var subjectIDs = [129750,129756,129761,129759,129758,129753,129754,129752,119567,129762,129750,129751,129760,33505,129757,129755];
   var subjectString = subjectIDs.toString();
   var subjectSlug = `&subject_ids=${subjectString}`;
-  var subjectIDsAPI = `http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527${subjectSlug}&expand=subjects&tag_names[]=Central%20Indiana%20Region&status[]=1&sort_by=name`;
+  var regionSlug = `Central%20Indiana%20Region`;
+  var subjectIDsAPI = `http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527${subjectSlug}&expand=subjects&tag_names[]=${regionSlug}&status[]=1&sort_by=name`;
   var stringIDs = subjectIDs.map(String);
-  
-// ===== lodash methods =====================
-  
+ 
  
   
   $.getJSON(subjectIDsAPI, function(data) {
@@ -69,6 +71,12 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
               nameSubjectObj["name"] = guide.name;
           	  nameSubjectObj["subject"] = subjects;
           	  
+          	  if (guide.friendly_url) {
+        					 nameSubjectObj["url"] = guide.friendly_url;
+        				} else {
+        					 nameSubjectObj["url"] = guide.url;
+                }
+          	  
           	  // here's where it starts getting complicated
           	  
               // for every subject of each guide
@@ -84,14 +92,6 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
 						          // (this excludes any subjects that were assigned to the guide outside of these specific subjects)
       							  if ((_.includes(stringIDs, idNumber)) && key == "id" ) {
        								      
-       								      //=========== TO DO =================
-       								      //
-       								      // need a step here that loops through each object and prints each subject with the name of the guide
-       								      // right now it's smashing subject names together when a guide has more than one subject
-       								      //
-       								      
-      					            // push only the selected subjects' name to the subjects array
-      					            // which will then be spit out with the name of the guide  (nameSubjectObj >> guideSubjectArray)
                   					subjects.push(item["name"]);
       							  }
       
@@ -102,69 +102,124 @@ var guidesAPI = "http://lgapi.libapps.com/1.1/guides/?site_id=103&key=83d416dc1b
 
               // take object full of name/subject key/value pairs and push it to the guide-subject array
               guideSubjectArray.push(nameSubjectObj);
-              console.log(nameSubjectObj);
+              
       
       })
+      
+      // array where new name/subject/url objects (thisGuide) will be pushed
+      var allSubjects = [];
+		
+    // for each guide in guideSubjectArray
+       for (let guide of guideSubjectArray) {
+        
+          // and for each subject that the guide has
+    			for (val in guide.subject) {
+    
+              // create an object with name/subject/url
+              // and push it to the allSubjects array
+              // which will later be sorted by subject and each subject counted
+      		    var thisGuide = new Object();
+                	thisGuide.name = guide.name;
+                	thisGuide.subject = guide.subject[val];
+          		   	thisGuide.url = guide.url;
+          			  allSubjects.push(thisGuide);
+        		}
+
+        }
     
   
         // create arrays to 1) sort subjects alphabetically, and 2) hold guide count by subject
-      	var sortedArray = _.orderBy(guideSubjectArray, "subject", "asc");
+      	var sortedArray = _.orderBy(allSubjects, "subject", "asc");
       	var uniqueArray = _.countBy(sortedArray, "subject");
       	
-      	// create counter for panel accordion collapse action
-      	var panelCounter = 0;
-      	
-      	//create tile for each subject  (includes count of guides in subject)
-      	//when tile clicked, reveal list of guides; when clicked again, list disappears (accordion panel style)
-      	 var subjectList = `<div class="panel-group" id="accordion">`;
-	 
-      	//loop through subjects and count and create list items
-      	_.forEach(uniqueArray, function(count, subject) {
-      	   
-            subjectList += `<div class="panel panel-default">
+   // SPLIT SUBJECT LIST INTO TWO COLUMNS
+      
+      //counts the number of subjects in the array	
+      var subjectNumber = _.size(uniqueArray); 
+		
+      //takes uniqueArray (misnomer) object and turns it into an array
+      var subjectNameNumberArray = Object.entries(uniqueArray);
+      
+      //splits the array into two separate arrays
+      var firstColumnSubjects = _.slice(subjectNameNumberArray, [start=0], [end=(subjectNumber / 2)]);
+      var secondColumnSubjects = _.slice(subjectNameNumberArray, (subjectNumber / 2));
+
+      //takes array of arrays from above and turns them into key/value pair objects (i.e. 'Business: 3')
+			firstColumnSubjects = _.fromPairs(firstColumnSubjects);
+			secondColumnSubjects = _.fromPairs(secondColumnSubjects);
+
+			
+		//creates an array of the two arrays of objects (essentially [[{Art: 6}, {Business: 3}], [{History: 5}, {Lanugages: 4}]])
+		var columnsArray = [firstColumnSubjects, secondColumnSubjects];
+		
+		//counter for each matching individual buttons/panels to each other
+		var panelCounter = 0;
+		
+		//counter for accordion ID numbers
+		var columnCounter = 1;
+		
+		// BEGIN HTML FOR COLUMNS
+		var subjectList = `<div class="row" id="subject-accordion">`;
+
+      // for each array in the columnsArray
+		_.forEach(columnsArray, function(column) {
+          
+      // add a panel group for the accordion in that column
+			 subjectList += `<div class="panel-group col-lg-6" id="accordion-${columnCounter}">`;
+
+      // for each subject in that column array (should be half of the available subjects), create a panel heading and panel body
+			_.forEach(column, function(count, subject) {
+
+				subjectList += `<div class="panel panel-default">
                               <div class="panel-heading">
-                                <h5 class="panel-title">
-                                  <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse${panelCounter}" aria-expanded="false">
-                                    ${subject}<span class="badge badge-default badge-pill">${count}</span>
+                              
+                                  <a role="button" data-toggle="collapse" data-parent="#accordion-${columnCounter}" data-target="#collapse${panelCounter}" aria-expanded="false">
+                                  <div class="badge badge-default badge-pill pull-right">${count}</div>
+                                    <div class="subject-name panel-title">${subject}</div>
+                                    
                                   </a>
-                                </h5>
+                               
                               </div>
                               <div id="collapse${panelCounter}" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                <ul>`
+                                <ul>`;
                                   
-                                  
-                                  _.forEach(data, function(guide) {
+                                  // fill each panel body with the names/links to guides in that subject
+                                   _.forEach(allSubjects, function(guide) {
                                       
-                                      if (subject === guide.subjects[0].name) {
+                                      //only if that subject matches the subjects in the list
+                                      if (subject === guide.subject) {
                                         
-                                        subjectList += `<li><a href="${guide.friendly_url}">${guide.name}</a></li>`;
+                                        //remove "Central Indiana" tag from every guide title
+                                        var noTag = (guide.name).replace(" - Central Indiana", "");
+                                        subjectList += `<li><a href="${guide.url}">${noTag}</a></li>`;
                                       }
                                     
                                   })
                                   
                                   
-            subjectList+=       `</ul>
+            subjectList+=      `</ul>
                                 </div>
                               </div>
-                            </div>`
-             
-            panelCounter += 1;
+                            </div>`;
+				panelCounter += 1;
+			});
+		
+			subjectList += `</div>`;
+			columnCounter += 1;
+
+
         });
+
+	
   
-        subjectList += `</div>`;
+    subjectList += `</div>`;
         
       	
       	$('#published-guides').empty();
         $('#published-guides').append(subjectList);
+  
     
   });
-
-
-// 3.1) get rid of "central indiana" in guide titles
-// 5) might want to do a "for...of" loop for iterating through subjects in each guide: https://stackoverflow.com/questions/11922383/access-process-nested-objects-arrays-or-json
-/// 5a) IF it matches one of the subject IDs, then display
-/// 5b) figure out how to access nested anonymous objects... for each loop?? i.e. for (const subject of data.subjects)
-
   
 </script>
