@@ -22,20 +22,22 @@ You'll first need to set up some things in LibGuides.
 
 1. Create a tag using your region, *e.g. Central Indiana Region*
 2. Create subjects for your guides to be divided into. You can see a list of the subjects I chose (borrowed from [PCC's library](http://guides.pcc.edu)) on our [Guides page](http://library.ivytech.edu/central-indiana/guides)
+	
 	2a. *If you'd rather use the subjects I've set up, skip this step*
 3. Tag the guides you want to show up in your list with the region tag you created
 4. Put guides into the subjects you created in step 2
+	
 	4a. **Tip**: Populate a few to start with just to make sure the script is working, then go back and add more
 
 ### subject IDs
 
 With your fancy new subjects set up, you'll need to copy those subject IDs down and replace them in the code.
 
-At the top of the script, you'll find a section titled **global variables**. The first variable, aptly named *var subjectIDs*, is an array that contains all the subjects I chose to use. If you're choosing to use the subjects I set up, you will just leave this array alone. If you created your own subjects, replace the integers in this array with your subject IDs, each one separated by a comma.
+At the top of the script (identified by the opening `<script>` tag on line 46), you'll find a section titled **global variables**. The first variable, aptly named *var subjectIDs*, is an array that contains all the subjects I chose to use. If you're choosing to use the subjects I set up, you will just leave this array alone. If you created your own subjects, replace the integers in this array with your subject IDs, each one separated by a comma.
 
 ### API URL
 
-You then need to change the text in *var regionSlug*. This should be a few variables down from the subjectIDs variable under **global variables**. You'll see that Central Indiana's tag looks like this: `` `Central%20Indiana%20Region` ``. Those `%20` bits in between the words represent a non-breaking space in the language or URLs. 
+You then need to change the text in *var regionSlug*. This should be a few variables down from the subjectIDs variable under **global variables**. You'll see that Central Indiana's tag looks like this: `` `Central%20Indiana%20Region` ``. Those `%20` bits in between the words represent a non-breaking space in the language of URLs. 
 
 If you're making a tag for, let's say, Arrested Development Quotes, you'd need to insert a `%20` between each word. It would look like this: `Arrested%20Development%20Quotes`. It's also important that this URL slug is wrapped in back ticks. The whole variable should look like this:
 
