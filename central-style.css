@@ -41,10 +41,8 @@ body {
 }
 h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a {
   font-family:'Open Sans', 'Arial', sans-serif;
-  text-transform:uppercase;
   color:#086c54;
   font-weight:700;
-  letter-spacing:.05em;
 }
 
 .alert-danger h2, .alert-danger h3, .alert-danger h4 {
@@ -60,9 +58,9 @@ h1 {
 h2 {font-size: 1.424em;
 }
 
-h3 {font-size: 1.266em;}
+h3 {font-size: 1.777em; line-height:1.5;}
 
-h4 {font-size: 1.125em; margin-top:1.125em;}
+h4 {font-size: 1.333em; line-height:1.5;}
 
 h1 a, h2 a, h3 a, h4 a {
   font-size:inherit;
@@ -70,15 +68,13 @@ h1 a, h2 a, h3 a, h4 a {
 }
 
 a, li>a {
-  color:#2B8815;
-  font-weight:700;
-  letter-spacing:.025em;
+  color:#5Fa300;
+  font-weight:600;
 }
 
 a:hover, a:focus, li>a:hover, li>a:focus {
-  color:#237111;
-  font-weight:700;
-  letter-spacing:.025em;
+  color:#487c00;
+  font-weight:600;
 }
 
 hr {
@@ -107,8 +103,8 @@ li a, a, a:focus {
 
 .btn-default {
    color: #fff;
-    background-color: #2B8815;
-    border-color: #2B8815;
+    background-color: #5Fa300;
+    border-color: #5Fa300;
     margin: 5px;
 }
 
@@ -118,8 +114,8 @@ li a, a, a:focus {
 
 .btn-default:hover, .btn-default:active:hover, .btn-default:active:focus {
 color: #fff;
-  background-color: #237111;
-  border-color: #237111;
+  background-color: #487c00;
+  border-color: #487c00;
   outline:none;
 }
 
@@ -214,7 +210,6 @@ ul.main-nav li a {
 }
 .nav>li>a {
   padding: 10px 0;
-  text-transform:uppercase;
   font-family:'Open Sans', 'Arial', sans-serif;
   color:#086c54;
 }
@@ -291,7 +286,7 @@ display:none;
 
 input#ebscohostsearchtext {
   padding-left:10px;
-  border: 2.5px solid #086c54;
+  border: 2.5px solid #006648;
   height:2.5em;
   width:100%;
   border-radius:4px;
@@ -315,6 +310,10 @@ input#ebscohostsearchtext {
 .search-box-links {
   display:flex;
   justify-content:space-between;
+}
+
+.home-list-group li>a {
+  font-size:1.05em;
 }
 
 .ask-us {
@@ -419,8 +418,13 @@ input#ebscohostsearchtext {
     font-size:1.5em;
   }
   
+  #discover {
+    font-size:1.85em;
+    line-height: 1.5;
+  }
+  
   .search-box-container {
-     padding: 1em 0;
+     padding: .5em 0;
   }
 
 
@@ -500,9 +504,8 @@ input#ebscohostsearchtext {
 
   .nav>li>a {
     padding: 2.5px 0;
-    font-size:1em;
+    font-size:1.25em;
     font-weight:700;
-    letter-spacing:.05em;
     border:none;
     margin:0;
   }
