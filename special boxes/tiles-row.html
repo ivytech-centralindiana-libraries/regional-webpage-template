@@ -1,0 +1,85 @@
+<div id="home-tiles">
+<a href="http://ivytech.libanswers.com/central-indiana">
+	<div class="tile">
+                  <div class="tile-head"><i class="fa fa-comments-o" aria-hidden="true"></i></div>
+                  <div class="tile-question">Have a question?</div>
+		<div class="tile-cta">Ask a Librarian</div>
+	</div>
+</a>
+<a href="http://library.ivytech.edu/central-indiana/a-z">
+	<div class="tile">
+                  <div class="tile-head"><span aria-hidden="true" class="fa fa-sort-alpha-asc"></span></div>
+                    <div class="tile-question">Need a database?</div>
+		<div class="tile-cta">A-Z List</div>
+	</div>
+</a>
+<a href="http://ivytech.ivytilt.edu">
+	<div class="tile">
+                  <div class="tile-head"><span aria-hidden="true" class="glyphicon glyphicon-leaf"></span></div>
+                <div class="tile-question">Not sure where to start?</div>
+		<div class="tile-cta">Ivy<i>TILT</i></div>
+	</div>
+</a>
+
+</div>
+
+
+<style>
+
+#home-tiles {
+    display:flex;
+    flex-flow:column;
+}
+
+#home-tiles a {
+    display:flex;
+    flex-flow:column;
+    border-radius: 3px;
+    flex: 1 1 100%;
+    margin: 20px 25px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    color: initial;
+    font-weight:400;
+    letter-spacing: initial;
+}
+ #home-tiles a:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  text-decoration:none;
+}
+        
+.tile-head {
+    text-align: center;
+    background: #086c54;
+    color: white;
+    font-size: 1.5em;
+    border-radius: 3px 3px 0 0;
+}
+
+.tile-cta  {
+    margin:20px 0;
+    text-align:center;
+    color:#5fa300;
+    font-weight:600;
+    font-size: 1.333em;
+}
+
+.tile-question {
+    padding-top: 20px;
+    text-align: center;
+}
+
+/* styles for tablets */
+@media (min-width: 769px) {
+
+    #home-tiles {
+        flex-flow:row; 
+    }
+    
+    #home-tiles a {
+    margin: 0 10px;
+ 
+}
+
+
+</style>
