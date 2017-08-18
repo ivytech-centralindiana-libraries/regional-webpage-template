@@ -39,7 +39,7 @@ body {
     padding-right:0;
     line-height:1.5;
 }
-h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a {
+h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a, h5 {
   font-family:'Open Sans', 'Arial', sans-serif;
   color:#086c54;
   font-weight:700;
@@ -60,7 +60,12 @@ h2 {font-size: 1.424em;
 
 h3 {font-size: 1.777em; line-height:1.5;}
 
-h4 {font-size: 1.333em; line-height:1.5;}
+h4 {
+  font-size: 1.333em; 
+  line-height:1.5;
+  padding-top:20px;
+  padding-bottom:10px;
+}
 
 h1 a, h2 a, h3 a, h4 a {
   font-size:inherit;
@@ -312,6 +317,10 @@ input#ebscohostsearchtext {
   justify-content:space-between;
 }
 
+.search-box-links a+a:before, .search-box-links a+a:hover:before {
+  content:none;
+}
+
 .home-list-group li>a {
   font-size:1.05em;
 }
@@ -360,6 +369,85 @@ input#ebscohostsearchtext {
 .ask-button-row {
   display:flex;
 }
+
+.section-icon {
+    display:none;
+}
+#s-lg-box-15215510 {
+    margin:0;
+}
+
+ul#no-home > li:first-of-type {
+display:none;
+}
+
+h3 a:hover {
+    letter-spacing: .05em;
+}
+
+.alert a {
+color: #d2322d;
+}
+
+#todays-date {
+    font-style:italic;
+}
+#hours-list ul  {
+    list-style: none;
+    padding-left: 0;
+    padding: 5px 0;
+}
+
+.more-link {
+font-style:italic;
+float:right;
+}
+
+.section-head {
+    border-top:1px solid;
+}
+.section-title{
+    display: inline-block;
+    margin-top: 10px;
+}
+.section-icon {
+    float: right;
+    background: #086c54;
+    color: #fff;
+    padding: 10px;
+}
+
+.search-box-links, .search-box-links a {
+   font-size:14px;
+   font-weight:400;
+}
+
+ .search-box-links a+a::before, .search-box-links a+a:hover::before {
+    content:'|';
+    padding:.5em;
+    text-decoration:none;
+   color: #929191;
+  }
+
+td.library-location {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .05em;
+}
+
+.table-condensed>tbody>tr>td {
+    padding: 2.5px 0;
+}
+
+.table>tbody>tr>td {
+    border-top: none;
+}
+
+.s-lib-box-content .ui-tabs-nav li>a {
+    color: #086c54;
+}
+
 
 /*styles single letters that divide A-Z list*/
 .alpha_group {
