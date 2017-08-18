@@ -25,10 +25,10 @@
 
 
 <style>
+
 #home-tiles {
     display:flex;
-    flex-flow:row;
-    justify-content:space-between;
+    flex-flow:column;
 }
 
 #home-tiles a {
@@ -36,19 +36,18 @@
     flex-flow:column;
     border-radius: 3px;
     flex: 1 1 100%;
-    margin: 0 10px;
+    margin: 20px 25px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     color: initial;
     font-weight:400;
     letter-spacing: initial;
 }
-
-#home-tiles a:hover {
+ #home-tiles a:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   text-decoration:none;
 }
-
+        
 .tile-head {
     text-align: center;
     background: #086c54;
@@ -67,5 +66,27 @@
     padding-top: 20px;
     text-align: center;
 }
+
+/* styles for tablets */
+@media (min-width: 769px) {
+
+    #home-tiles {
+        flex-flow:row; 
+    }
+    
+    #home-tiles a {
+    margin: 0 10px;
+ 
+}
+
+
+/* full-screen styles */
+@media (min-width: 992px) {
+  
+  
+}
+
+    
+
 
 </style>
