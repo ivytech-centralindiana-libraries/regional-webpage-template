@@ -1,7 +1,7 @@
 /*
-============ Website Style 2.0.2 MOBILE FIRST =======================================
+============ Website Style 2.1 MOBILE FIRST =======================================
 Created by: Caryl Wyatt, Librarian, Ivy Tech Community College, Lawrence Library, Indianapolis
-Last updated: 03.01.2017  NOTE TO ME: disable top-level nav click action before uploading to statewide groups
+Last updated: 08.18.2017  NOTE TO ME: disable top-level nav click action before uploading to statewide groups
 ===============================================================================================
 
   First things first
@@ -39,12 +39,10 @@ body {
     padding-right:0;
     line-height:1.5;
 }
-h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a {
+h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a, h5 {
   font-family:'Open Sans', 'Arial', sans-serif;
-  text-transform:uppercase;
   color:#086c54;
   font-weight:700;
-  letter-spacing:.05em;
 }
 
 .alert-danger h2, .alert-danger h3, .alert-danger h4 {
@@ -60,9 +58,14 @@ h1 {
 h2 {font-size: 1.424em;
 }
 
-h3 {font-size: 1.266em;}
+h3 {font-size: 1.777em; line-height:1.5;}
 
-h4 {font-size: 1.125em; margin-top:1.125em;}
+h4 {
+  font-size: 1.333em; 
+  line-height:1.5;
+  padding-top:20px;
+  padding-bottom:10px;
+}
 
 h1 a, h2 a, h3 a, h4 a {
   font-size:inherit;
@@ -70,15 +73,13 @@ h1 a, h2 a, h3 a, h4 a {
 }
 
 a, li>a {
-  color:#2B8815;
-  font-weight:700;
-  letter-spacing:.025em;
+  color:#5Fa300;
+  font-weight:600;
 }
 
 a:hover, a:focus, li>a:hover, li>a:focus {
-  color:#237111;
-  font-weight:700;
-  letter-spacing:.025em;
+  color:#487c00;
+  font-weight:600;
 }
 
 hr {
@@ -107,8 +108,8 @@ li a, a, a:focus {
 
 .btn-default {
    color: #fff;
-    background-color: #2B8815;
-    border-color: #2B8815;
+    background-color: #5Fa300;
+    border-color: #5Fa300;
     margin: 5px;
 }
 
@@ -118,8 +119,8 @@ li a, a, a:focus {
 
 .btn-default:hover, .btn-default:active:hover, .btn-default:active:focus {
 color: #fff;
-  background-color: #237111;
-  border-color: ##237111;
+  background-color: #487c00;
+  border-color: #487c00;
   outline:none;
 }
 
@@ -214,7 +215,6 @@ ul.main-nav li a {
 }
 .nav>li>a {
   padding: 10px 0;
-  text-transform:uppercase;
   font-family:'Open Sans', 'Arial', sans-serif;
   color:#086c54;
 }
@@ -291,7 +291,7 @@ display:none;
 
 input#ebscohostsearchtext {
   padding-left:10px;
-  border: 2.5px solid #086c54;
+  border: 2.5px solid #006648;
   height:2.5em;
   width:100%;
   border-radius:4px;
@@ -315,6 +315,14 @@ input#ebscohostsearchtext {
 .search-box-links {
   display:flex;
   justify-content:space-between;
+}
+
+.search-box-links a+a:before, .search-box-links a+a:hover:before {
+  content:none;
+}
+
+.home-list-group li>a {
+  font-size:1.05em;
 }
 
 .ask-us {
@@ -361,6 +369,85 @@ input#ebscohostsearchtext {
 .ask-button-row {
   display:flex;
 }
+
+.section-icon {
+    display:none;
+}
+#s-lg-box-15215510 {
+    margin:0;
+}
+
+ul#no-home > li:first-of-type {
+display:none;
+}
+
+h3 a:hover {
+    letter-spacing: .05em;
+}
+
+.alert a {
+color: #d2322d;
+}
+
+#todays-date {
+    font-style:italic;
+}
+#hours-list ul  {
+    list-style: none;
+    padding-left: 0;
+    padding: 5px 0;
+}
+
+.more-link {
+font-style:italic;
+float:right;
+}
+
+.section-head {
+    border-top:1px solid;
+}
+.section-title{
+    display: inline-block;
+    margin-top: 10px;
+}
+.section-icon {
+    float: right;
+    background: #086c54;
+    color: #fff;
+    padding: 10px;
+}
+
+.search-box-links, .search-box-links a {
+   font-size:14px;
+   font-weight:400;
+}
+
+ .search-box-links a+a::before, .search-box-links a+a:hover::before {
+    content:'|';
+    padding:.5em;
+    text-decoration:none;
+   color: #929191;
+  }
+
+td.library-location {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .05em;
+}
+
+.table-condensed>tbody>tr>td {
+    padding: 2.5px 0;
+}
+
+.table>tbody>tr>td {
+    border-top: none;
+}
+
+.s-lib-box-content .ui-tabs-nav li>a {
+    color: #086c54;
+}
+
 
 /*styles single letters that divide A-Z list*/
 .alpha_group {
@@ -419,8 +506,13 @@ input#ebscohostsearchtext {
     font-size:1.5em;
   }
   
+  #discover {
+    font-size:1.85em;
+    line-height: 1.5;
+  }
+  
   .search-box-container {
-     padding: 1em 0;
+     padding: .5em 0;
   }
 
 
@@ -500,9 +592,8 @@ input#ebscohostsearchtext {
 
   .nav>li>a {
     padding: 2.5px 0;
-    font-size:1em;
+    font-size:1.25em;
     font-weight:700;
-    letter-spacing:.05em;
     border:none;
     margin:0;
   }
