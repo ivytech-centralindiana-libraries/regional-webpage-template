@@ -1,7 +1,7 @@
 /*
 ============ Website Style 2.1 MOBILE FIRST =======================================
 Created by: Caryl Wyatt, Librarian, Ivy Tech Community College, Lawrence Library, Indianapolis
-Last updated: 08.18.2017  NOTE TO ME: disable top-level nav click action before uploading to statewide groups
+Last updated: 08.25.2017  NOTE TO ME: disable top-level nav click action before uploading to statewide groups
 ===============================================================================================
 
   First things first
@@ -21,8 +21,8 @@ Last updated: 08.18.2017  NOTE TO ME: disable top-level nav click action before 
       Ivy Tech Green: #086c54
       Medium Green: #41ad49
       Lime: #8dc63f
-      Starbucks Lime: #2B8815
-      Starbucks Hover Lime: #237111
+      Link green: #5Fa300
+      Link hover: #487c00
 */
 
 /* ---- Base Styles ---- */
@@ -48,6 +48,10 @@ h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a, h5 {
 .alert-danger h2, .alert-danger h3, .alert-danger h4 {
   color:#d2322d;
   margin-top:0;
+}
+
+.alert a {
+color: #d2322d;
 }
 
 h1 {
@@ -193,6 +197,11 @@ ul.main-nav li a {
   letter-spacing:0;
 }
 
+/* removes HOME heading/link from nav menu */
+ul#no-home > li:first-of-type {
+display:none;
+}
+
 .mobile-buttons {
   display:flex;
   flex-direction:column;
@@ -279,6 +288,8 @@ display:none;
   padding:0;
 }
 
+/* --- HOMEPAGE --- */
+
 .search-box-header h3 {
   margin-top:0;
 }
@@ -296,7 +307,6 @@ input#ebscohostsearchtext {
   width:100%;
   border-radius:4px;
   flex:1 0 8em;
-  margin-left:.5em;
 }
 
 #onlysearchbutton.btn {
@@ -305,7 +315,6 @@ input#ebscohostsearchtext {
   flex:0 0 auto;
   background-color: #006648;
   color: white;
-  transform: translateY(-1px);
 }
 
 .glyphicon.glyphicon-search {
@@ -317,90 +326,27 @@ input#ebscohostsearchtext {
   justify-content:space-between;
 }
 
+.search-box-links, .search-box-links a {
+   font-size:14px;
+   font-weight:400;
+}
+
 .search-box-links a+a:before, .search-box-links a+a:hover:before {
   content:none;
 }
 
-.home-list-group li>a {
-  font-size:1.05em;
-}
-
-.ask-us {
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
-  flex-flow: row wrap;
-  background: gainsboro;
-  padding: 1em;
-}
-
-.ask-us h3 {
-  margin:0;
-}
-
-.ask-us .btn {
-  background:#2B8815;
-  margin:.75em;
-  padding-left: 1.25em;
-  padding-right: 1.25em;
-   color:#fff;
-  text-decoration:none;
-  font-weight:700;
-  outline:none;
-}
-
-.ask-us .btn:hover, .ask-us .btn:focus {
-  background:#237111;
-  margin:.75em;
-}
-
-.ask-us .btn a, .ask-us .btn:hover, .ask-us .btn:focus {
-  color:#fff;
-  text-decoration:none;
-  outline:none;
-}
-
-.ask-buttons {
-  display:flex;
-  flex-flow:row wrap;
-  justify-content:center;
-}
-
-.ask-button-row {
-  display:flex;
-}
-
-.section-icon {
-    display:none;
-}
-#s-lg-box-15215510 {
-    margin:0;
-}
-
-ul#no-home > li:first-of-type {
-display:none;
-}
-
-h3 a:hover {
-    letter-spacing: .05em;
-}
-
-.alert a {
-color: #d2322d;
-}
-
-#todays-date {
-    font-style:italic;
-}
-#hours-list ul  {
-    list-style: none;
-    padding-left: 0;
-    padding: 5px 0;
-}
+.search-box-links a+a::before, .search-box-links a+a:hover::before {
+    content:'|';
+    padding:.5em;
+    text-decoration:none;
+   color: #929191;
+  }
+  
+/* general home styles */  
 
 .more-link {
-font-style:italic;
-float:right;
+  font-style:italic;
+  float:right;
 }
 
 .section-head {
@@ -411,43 +357,111 @@ float:right;
     margin-top: 10px;
 }
 .section-icon {
-    float: right;
-    background: #086c54;
-    color: #fff;
-    padding: 10px;
+    display:none;
 }
 
-.search-box-links, .search-box-links a {
-   font-size:14px;
-   font-weight:400;
+#s-lg-box-15215510 {
+    margin:0;
 }
 
- .search-box-links a+a::before, .search-box-links a+a:hover::before {
-    content:'|';
-    padding:.5em;
-    text-decoration:none;
-   color: #929191;
-  }
 
-td.library-location {
+/* featured databases and common questions */
+
+.home-list-group {
+    padding-left: 0;
+}
+
+.home-list-group li:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-top: 1px solid #e1e1e1;
+}
+
+.home-list-group li {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.home-list-group li>a {
+  font-size:1.05em;
+}
+
+
+/* calendar widget */
+
+#todays-date {
+    font-style:italic;
+}
+#hours-list ul  {
+    list-style: none;
+    padding-left: 0;
+    padding: 5px 0;
+}
+
+#hours-grid td {
+    border-top: none;
+}
+
+#hours-grid .library-location {
     text-transform: uppercase;
     font-size: 16px;
     font-weight: 700;
     letter-spacing: .05em;
-}
-
-.table-condensed>tbody>tr>td {
     padding: 2.5px 0;
 }
 
-.table>tbody>tr>td {
-    border-top: none;
+/* Call-to-action tiles */
+
+#home-tiles {
+    display:flex;
+    flex-flow:column;
 }
 
-.s-lib-box-content .ui-tabs-nav li>a {
-    color: #086c54;
+#home-tiles a {
+    display:flex;
+    flex-flow:column;
+    border-radius: 3px;
+    flex: 1 1 100%;
+    margin: 20px 25px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    color: initial;
+    font-weight:400;
+    letter-spacing: initial;
+}
+ #home-tiles a:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  text-decoration:none;
+}
+        
+.tile-head {
+    text-align: center;
+    background: #086c54;
+    color: white;
+    font-size: 1.5em;
+    border-radius: 3px 3px 0 0;
 }
 
+.tile-cta  {
+    margin:20px 0;
+    text-align:center;
+    color:#5fa300;
+    font-weight:600;
+    font-size: 1.333em;
+}
+
+.tile-question {
+    padding-top: 20px;
+    text-align: center;
+}
+
+
+/* ------ SUB PAGES -------- */
+
+/* === AZ LIST === */
 
 /*styles single letters that divide A-Z list*/
 .alpha_group {
@@ -463,6 +477,53 @@ td.library-location {
     padding-left: 10px;
 }
 
+/* === GUIDES PAGE === */
+
+/* guide list widget */
+
+.s-lib-box-content .ui-tabs-nav li>a {
+    color: #086c54;
+}
+
+.subject-name.panel-title, .ui-widget-content a {
+   font-family:'Open Sans', 'Arial', sans-serif;
+    text-decoration: none;
+    outline: none;
+    color: #5Fa300;
+}
+
+  .ui-tabs .ui-tabs-nav {
+    background:none;
+    border:none;
+    padding:0;
+    display: block;
+    border-bottom: 1px solid #e6e6e6;
+   padding-left:10px;
+  }
+  
+  .s-lib-jqtabs {
+    padding:0;
+    border:none;
+  }
+  .ui-tabs .ui-tabs-nav li {
+    margin-bottom:-.25px;
+
+  }
+  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    border: 1px solid #E6E6E6;
+    background: #fff!important;
+  }
+  .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default,
+  .ui-state-default:hover, .ui-widget-content .ui-state-default:hover, .ui-widget-header .ui-state-default:hover {
+    border: 1px solid #E6E6E6;
+    background: #e6e6e6;
+  }
+ #subject-accordion .panel-body ul li {
+    padding: 10px 0;
+  }
+
+/* page footer */
+
 .s-lib-footer {
   background-color: #fff;
 }
@@ -475,15 +536,6 @@ td.library-location {
 /* styles for tablets */
 @media (min-width: 769px) {
 
-  /* .main-header,
-  .main-nav {
-    display:flex;
-  }
-  
- .main-header {
-    justify-content:center;
-  }
-  */
   
   .name a {
     font-size: inherit;
@@ -552,6 +604,14 @@ td.library-location {
     content:'|';
     padding:.5em;
     text-decoration:none;
+  }
+  
+  #home-tiles {
+    flex-flow:row; 
+  }
+    
+  #home-tiles a {
+    margin: 0 10px;
   }
 }
 
