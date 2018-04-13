@@ -2,13 +2,18 @@ var expect = require('chai').expect,
      _ = require('lodash'),
     { JSDOM } = require('jsdom');
 
-const jsdom = new JSDOM('<!doctype html><html><body><div>1</div></body></htl>');
+//require('es6-promise').polyfill();
+//require('isomorphic-fetch');
+
+
+const jsdom = new JSDOM('<!doctype html><html><body><div>1</div></body></html>');
 const { window } = jsdom;
 const { document } = window;
 global.window = window;
 global.document = document;
  
 const $ = global.jQuery = require( 'jquery' );
+const fetch = require('node-fetch');
 
 describe('helloWorld', function () {
 
@@ -25,6 +30,16 @@ var displayAZlist = require('../az-list/az.js').displayAZlist;
    it('should be a function', function () {
         expect(displayAZlist).to.be.a('function');
     }); 
+});
+
+describe('fetchData', function(){
+    var fetchData = require('../az-list/az.js').fetchData;
+    it('should fetch data and return an array of all database objects', function () {
+       var input = 'https://lgapi-us.libapps.com/1.1/assets?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527&asset_types=10&expand=az_types,subjects';
+       //var expected = 7744;
+        var actual = fetchData(input);
+        expect(actual).to.be.an('array');
+    });
 });
 
 describe('filterDataByRegion',function () {
@@ -93,23 +108,29 @@ describe('alphabetizeByDatabaseName', function () {
     var alphabetizeByDatabaseName = require('../az-list/az.js').alphabetizeByDatabaseName;
    it('should return array of objects sorted alphabetically by database name',  function () {
       var input = [{
-          name: "caryl's house"
+          name: "caryl's house",
+          address: "7875 alton st"
       },
       {
-          name: "abby's house"
+          name: "abby's house",
+          address: "315 w washington"
       },
       {
-          name: "bill's house"
+          name: "bill's house",
+          address: "1600 penn ave"
       }];
 
        var expected = [{
-           name: "abby's house"
+           name: "abby's house",
+          address: "315 w washington"
        },
        {
-           name: "bill's house"
+           name: "bill's house",
+          address: "1600 penn ave"
        },
        {
-           name: "caryl's house"
+           name: "caryl's house",
+          address: "7875 alton st"
        }];
        var actual = alphabetizeByDatabaseName(input);
        expect(actual).to.eql(expected);
