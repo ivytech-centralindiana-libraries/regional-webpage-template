@@ -1,4 +1,5 @@
 var $ = require('jquery'),
+    fetch = require('node-fetch'),
     _ = require('lodash');
 
 function helloWorld() {
@@ -70,6 +71,22 @@ function displayAZlist(data) {
 //         
 //    });
 //
+}
+
+function fetchData (url) {
+    let databases = [];
+    fetch(url)
+    .then(response => {
+        return response.json().then(data => {
+            data.forEach(function (database) {
+                databases.push(database);
+            });
+        });
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return(databases);
 }
 
 function filterDataByRegion (data, region) {
@@ -209,6 +226,7 @@ function listDatabases(databaseObjects) {
 
 module.exports.helloWorld = helloWorld;
 module.exports.displayAZlist = displayAZlist;
+module.exports.fetchData = fetchData;
 module.exports.alphabetizeByDatabaseName = alphabetizeByDatabaseName;
 module.exports.filterDataByRegion = filterDataByRegion; 
 module.exports.objectToListItem = objectToListItem;
