@@ -1,9 +1,9 @@
 var $ = require('jquery'),
-    fetch = require('node-fetch'),
-    _ = require('lodash');
+  fetch = require('node-fetch'),
+  _ = require('lodash');
 
 function helloWorld() {
-    return 'hello world';
+  return 'hello world';
 };
 
 
@@ -11,132 +11,111 @@ function helloWorld() {
 //var azAPI = "https://lgapi-us.libapps.com/1.1/assets?site_id=103&key=83d416dc1ba38e91c12fee5de29a4527&asset_types=10&expand=az_types,subjects";
 //
 function displayAZlist(data) {
-    return true; //test the test
-//       
-//    //returns an array that holds all databases listed as Central Indiana as objects
-//    var CIdatabases = _.filter(response.responseJSON, (['az_types[0].name', 'Central Indiana Region']));
-//        
-//    //sorts alphabetically
-//    var sorted = _.sortBy(CIdatabases, 'name');
-//           
-//    //and places each database in list
-//    var listHTML = '<ul>';
-//     
-//         
-//    _.forEach(sorted, function(database) {
-//                
-//           listHTML += '<li>';
-//           listHTML += '<a href="' + database.url + '" target="_blank">';
-//           listHTML += database.name;
-//           listHTML += '</a><br/>';
-//           listHTML += '<div class="az-description"><p>'
-//           listHTML += database.description;
-//           listHTML += '</p></div>'
-//           listHTML += '</li>'
-//     });
-//
-//    listHTML += '</ul>';
-//
-//    //then appends list to #AZ-list div
-//    $('#AZ-list').removeClass('sk-fading-circle');
-//    $('#AZ-list').append(listHTML);
-//
-//
-//    //this function (which needs a name) took forever to figure out:
-//    $( "#AZ-list li" ).each(function( index ) {
-//              
-//        //variable holds the first character of whatever string we're looking at; in this case, the title of the database in the A-Z list
-//        var firstChar = ( $( this ).text().trim()[0] );
-//                  
-//        //empty variable to use during for loop below
-//        //will hold the number of the character code that corresponds to each letter of the alphabet
-//        var charCode;
-//                 
-//        //variable that changes the ID of the div that holds the a-z list items
-//        var groupName = "letter_" + firstChar;
-//                  
-//        //variable that holds the boolean value of whether or not a div with a specific/unique groupName ID already exists
-//        var groupExists = document.getElementById(groupName);
-//               
-//        //this loop takes the character code of each letter of the alphabet (happens to start with 65 = A)
-//        //and looks at the string (name of the database in A-Z list) to see if the first character of that string matches the the character code
-//        //if so, it adds a div with an id of the letter before the list item
-//        //then moves on to the next database name
-//        //if the div with the ID groupName already exists (&& !groupExists) it doesn't add the div
-//        for (charCode=65; charCode < 91; charCode++) {
-//            if ((String.fromCharCode(charCode) == firstChar) && !groupExists) {
-//                  $(this).before('<div class="alpha_group" id="' + groupName + '">' + firstChar + '</div>');
-//            }
-//        }
-//         
-//    });
-//
+  return true; //test the test
+
 }
 
 function fetchData (url) {
-    let databases = [];
-    fetch(url)
+  let databases = [];
+  fetch(url)
     .then(response => {
-        return response.json().then(data => {
-            data.forEach(function (database) {
-                databases.push(database);
-            });
+      return response.json().then(data => {
+        data.forEach(function (database) {
+          databases.push(database);
         });
+      });
     })
     .catch(error => {
-        console.log(error);
+      console.log(error);
     });
-    return(databases);
+  return databases;
 }
 
 function filterDataByRegion (data, region) {
-    let regionDatabaseList = data.filter(database => {
-        if (database.az_types) {
-            return database.az_types[0].name === region;
-        }
-    });
-    return regionDatabaseList;
+  let regionDatabaseList = data.filter(database => {
+    if (database.az_types) {
+      return database.az_types[0].name === region;
+    }
+  });
+  return regionDatabaseList;
 }
 
 function compare(a, b) {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
+  const nameA = a.name.toUpperCase();
+  const nameB = b.name.toUpperCase();
 
-    let comparison = 0;
-    if (nameA > nameB) {
-        comparison = 1;
-    } else if (nameA < nameB) {
-        comparison = -1;
-    }
+  let comparison = 0;
+  if (nameA > nameB) {
+    comparison = 1;
+  } else if (nameA < nameB) {
+    comparison = -1;
+  }
 
-    return comparison;
+  return comparison;
 }
 
 function alphabetizeByDatabaseName (data) {
 
-    let alphabetizedData = data.sort(compare);
-    return alphabetizedData;
+  let alphabetizedData = data.sort(compare);
+  return alphabetizedData;
 }
 
 function objectToListItem(azObject) {
-    return `<li><a href="${azObject.url}" target="_blank">${azObject.name}</a><br/><div class="az-description"><p>${azObject.description}</p></div></li>`
+  return `<li><a href="${azObject.url}" target="_blank">${azObject.name}</a><br/><div class="az-description"><p>${azObject.description}</p></div></li>`
 }
 function arrayToListItems(alphaArray) {
-    let databaseList = `<ul>`;
-    alphaArray.forEach(function(database) {
-       const listItem = objectToListItem(database);
-       databaseList += listItem;
-    });
-    databaseList += `</ul>`; 
-    return databaseList;
+  let databaseList = `<ul>`;
+  alphaArray.forEach(function(database) {
+    const listItem = objectToListItem(database);
+    databaseList += listItem;
+  });
+  databaseList += `</ul>`; 
+  return databaseList;
 }
 function listDatabases(databaseObjects) {
 
-    let listHTML = '<ul>';
+  //    //then appends list to #AZ-list div
+  //    $('#AZ-list').removeClass('sk-fading-circle');
+  //    $('#AZ-list').append(listHTML);
 
-    listHTML += '</ul>';
 }
+function addLettersToPage () {
+  //    //this function (which needs a name) took forever to figure out:
+  //    $( "#AZ-list li" ).each(function( index ) {
+  //              
+  //        //variable holds the first character of whatever string we're looking at; in this case, the title of the database in the A-Z list
+  //        var firstChar = ( $( this ).text().trim()[0] );
+  //                  
+  //        //empty variable to use during for loop below
+  //        //will hold the number of the character code that corresponds to each letter of the alphabet
+  //        var charCode;
+  //                 
+  //        //variable that changes the ID of the div that holds the a-z list items
+  //        var groupName = "letter_" + firstChar;
+  //                  
+  //        //variable that holds the boolean value of whether or not a div with a specific/unique groupName ID already exists
+  //        var groupExists = document.getElementById(groupName);
+  //               
+  //        //this loop takes the character code of each letter of the alphabet (happens to start with 65 = A)
+  //        //and looks at the string (name of the database in A-Z list) to see if the first character of that string matches the the character code
+  //        //if so, it adds a div with an id of the letter before the list item
+  //        //then moves on to the next database name
+  //        //if the div with the ID groupName already exists (&& !groupExists) it doesn't add the div
+  //        for (charCode=65; charCode < 91; charCode++) {
+  //            if ((String.fromCharCode(charCode) == firstChar) && !groupExists) {
+  //                  $(this).before('<div class="alpha_group" id="' + groupName + '">' + firstChar + '</div>');
+  //            }
+  //        }
+  //         
+  //    });
 
+}
+function addLettersToGroups () {
+
+}
+function putDatabasesinAlphaGroups () {
+
+}
 //
 //  
 //var response = $.getJSON(azAPI, displayAZlist);
